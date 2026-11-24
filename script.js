@@ -19,12 +19,6 @@ const siteData = {
     ],
     "curso": "Bacharelado em Ciência da Computação",
     "duracao": "20 minutos",
-    "exemplosCapa": [
-      "250",
-      "Saldo de R$ 250",
-      "Padrão de gastos",
-      "Rever o orçamento"
-    ],
     "nomeGuia": "Guia de Estudo do Grupo 6"
   },
   "introducao": {
@@ -1111,16 +1105,6 @@ function figure(id) {
   </figure>`;
 }
 
-function heroPreview() {
-  return `<a class="hero-preview" href="#chart-transformacao">
-    <span class="preview-caption"><span>Exemplo · Unidade 1</span>${icon('arrow')}</span>
-    <span class="preview-heading"><span class="preview-title">Do dado à decisão</span>${art('records')}</span>
-    <ol class="preview-flow">${htmlList(siteData.fluxoUnidade1, (item,i) => `<li>
-      <span>${escapeHTML(item.titulo)}</span><strong>${escapeHTML(siteData.seminario.exemplosCapa[i])}</strong>
-    </li>`)}</ol>
-  </a>`;
-}
-
 function brand() {
   return `<a class="brand" href="#inicio"><span class="brand-mark">${icon('shield')}</span><span>Grupo 6</span></a>`;
 }
@@ -1148,14 +1132,13 @@ function home() {
           <a href="#glossario">Consultar glossário</a>
         </div>
       </div>
-      ${heroPreview()}
+      <section class="route" aria-labelledby="roteiro-titulo">
+        <h2 id="roteiro-titulo" tabindex="-1">Roteiro do seminário</h2>
+        <ol class="route-grid">${htmlList(siteData.blocos, (block,i) => `<li><a class="route-link" href="#${block.id}">
+          <span class="block-index" aria-hidden="true">${i+1}</span><strong>${escapeHTML(block.curto)}</strong>${icon('arrow')}
+        </a></li>`)}</ol>
+      </section>
     </div>
-    <section class="route" aria-labelledby="roteiro-titulo">
-      <h2 id="roteiro-titulo" tabindex="-1">Roteiro do seminário</h2>
-      <ol class="route-grid">${htmlList(siteData.blocos, (block,i) => `<li><a class="route-link" href="#${block.id}">
-        <span class="block-index" aria-hidden="true">${i+1}</span><strong>${escapeHTML(block.curto)}</strong>${icon('arrow')}
-      </a></li>`)}</ol>
-    </section>
     <details class="disclosure about"><summary>Sobre o seminário · IFS Itabaiana</summary>
       <dl class="academic">
         <div><dt>${escapeHTML(s.instituicao)}</dt><dd>${escapeHTML(s.campus)} · ${escapeHTML(s.curso)}</dd></div>
