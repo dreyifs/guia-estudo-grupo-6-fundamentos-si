@@ -1128,7 +1128,7 @@ function home() {
         <h1 id="titulo-portal"><span class="title-prefix">${escapeHTML(s.nomeGuia)}<span class="sr-only"> - </span></span>${escapeHTML(s.titulo)}</h1>
         <p>${escapeHTML(s.descricao)}</p>
         <div class="hero-links">
-          <a class="primary" href="#roteiro-titulo">Ver os blocos ${icon('arrow')}</a>
+          <a class="primary" href="#revisao">Ir para a revisão ${icon('arrow')}</a>
           <a href="#glossario">Consultar glossário</a>
         </div>
       </div>
