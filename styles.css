@@ -6,15 +6,15 @@
   --ink: #17283e;
   --text: #344354;
   --muted: #526173;
-  --line: #d9ded9;
+  --line: #d8e2ef;
   --control: #7c898f;
-  --accent: #136652;
+  --accent: #205db5;
   --on-accent: #fff;
-  --accent-soft: #e1eee8;
-  --preview: #e2eee7;
+  --accent-soft: #e8f0fd;
+  --preview: #eef4ff;
   --bar-total: #4c6077;
-  --bar-part: #257660;
-  --focus: #14655f;
+  --bar-part: #317adf;
+  --focus: #205db5;
   --radius: .5rem;
   --section-space: clamp(2rem,5vw,4rem);
   --serif: Georgia, "Times New Roman", serif;
@@ -30,13 +30,13 @@
   --muted: #b3c2d1;
   --line: #384654;
   --control: #8495a5;
-  --accent: #9de0c4;
-  --on-accent: #152722;
-  --accent-soft: #254239;
-  --preview: #263d36;
+  --accent: #a5c8ff;
+  --on-accent: #112646;
+  --accent-soft: #263b57;
+  --preview: #22344b;
   --bar-total: #9aabc2;
-  --bar-part: #6bcaa7;
-  --focus: #a6ebd0;
+  --bar-part: #769fe5;
+  --focus: #a5c8ff;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 5.5rem; }
