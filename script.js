@@ -15,7 +15,7 @@ const siteData = {
       "Letícia",
       "Mikael",
       "Andrey",
-      "Isabelly"
+      "Izabelly"
     ],
     "curso": "Bacharelado em Ciência da Computação",
     "duracao": "20 minutos",
@@ -864,7 +864,7 @@ const siteData = {
       "id": "boas-praticas",
       "titulo": "Boas Práticas e Conclusão",
       "curto": "Boas práticas e conclusão",
-      "pessoa": "Isabelly",
+      "pessoa": "Izabelly",
       "icon": "check",
       "resumo": "Pessoas, tecnologia e gestão dividem a responsabilidade pela proteção dos dados."
     }
