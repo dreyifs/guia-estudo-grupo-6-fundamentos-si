@@ -1,0 +1,2605 @@
+<!doctype html>
+<!-- Revisão visual orientada pela skill Unslop, de Damir Sokolovsky. https://github.com/heydamir/unslop -->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guia de Estudo do Grupo 6 de Segurança da Informação e Proteção de Dados, IFS Campus Itabaiana.">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Guia de Estudo do Grupo 6 - Segurança da Informação e Proteção de Dados</title>
+  <style>
+:root {
+  color-scheme: light;
+  --canvas: #f7f6f2;
+  --surface: #fffefa;
+  --soft: #efeee8;
+  --ink: #17283e;
+  --text: #344354;
+  --muted: #526173;
+  --line: #d9ded9;
+  --control: #7c898f;
+  --accent: #136652;
+  --on-accent: #fff;
+  --accent-soft: #e1eee8;
+  --preview: #e2eee7;
+  --bar-total: #4c6077;
+  --bar-part: #257660;
+  --focus: #14655f;
+  --radius: .5rem;
+  --section-space: clamp(2rem,5vw,4rem);
+  --serif: Georgia, "Times New Roman", serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #121922;
+  --surface: #18222d;
+  --soft: #212e3a;
+  --ink: #eff4fa;
+  --text: #d6e0ea;
+  --muted: #b3c2d1;
+  --line: #384654;
+  --control: #8495a5;
+  --accent: #9de0c4;
+  --on-accent: #152722;
+  --accent-soft: #254239;
+  --preview: #263d36;
+  --bar-total: #9aabc2;
+  --bar-part: #6bcaa7;
+  --focus: #a6ebd0;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 5.5rem; }
+body { margin: 0; color: var(--text); background: var(--canvas); font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; overflow-wrap: anywhere; }
+button, input, select { font: inherit; color: inherit; max-width: 100%; }
+button, summary, select, input[type="checkbox"] { cursor: pointer; }
+a { color: var(--accent); text-underline-offset: .2em; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[hidden] { display: none !important; }
+.symbols, .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: fixed; z-index: 10; top: .75rem; left: .75rem; padding: .75rem 1rem; background: var(--surface); transform: translateY(-200%); }
+.skip:focus { transform: none; }
+.icon { width: 1.125rem; height: 1.125rem; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+h1, h2, h3, h4, strong, dt, summary, legend { color: var(--ink); }
+h1, h2, h3, h4 { line-height: 1.2; font-weight: 500; }
+h1, h2 { font-family: var(--serif); font-weight: 400; }
+h1 { font-size: clamp(2.125rem,1.5rem + 2.8vw,4.25rem); line-height: 1.04; letter-spacing: -.025em; max-width: 17ch; }
+.title-prefix { display: block; margin-bottom: .5rem; font: 600 .9375rem/1.5 system-ui,sans-serif; letter-spacing: 0; color: var(--accent); }
+h2 { font-size: clamp(1.6rem,1.2rem + 1.3vw,2.625rem); }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; }
+strong, dt, summary, legend { font-weight: 600; }
+p { max-width: 64ch; }
+p + p { margin-top: .5rem; }
+cite { font-style: normal; }
+.layout { min-height: 100vh; }
+main { min-width: 0; }
+.main-inner { width: min(100%,79rem); margin-inline: auto; padding: clamp(1rem,4vw,3rem); }
+.topbar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: .5rem; padding: .5rem clamp(1rem,4vw,3rem); border-bottom: 1px solid var(--line); background: var(--canvas); }
+.topbar-title, .sidebar { display: none; }
+.brand { display: inline-flex; align-items: center; gap: .5rem; color: var(--ink); text-decoration: none; font-weight: 600; letter-spacing: .025em; }
+.brand-mark { display: grid; place-items: center; color: var(--accent); border: 1px solid var(--accent); border-radius: .375rem; width: 2rem; height: 2rem; }
+.mobile-nav { margin-left: auto; }
+.mobile-nav summary, .disclosure > summary, .term > summary, .flash > summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+.mobile-nav[open] nav { position: absolute; right: 1rem; top: calc(100% + .25rem); width: min(21rem,calc(100% - 2rem)); max-height: 70vh; overflow-y: auto; padding: .5rem; background: var(--surface); border: 1px solid var(--control); border-radius: var(--radius); }
+nav a { display: flex; align-items: center; min-height: 2.75rem; gap: .5rem; padding: .5rem; line-height: 1.3; color: var(--text); font-size: .9rem; text-decoration: none; border-radius: var(--radius); }
+nav a:hover, nav a[aria-current] { background: var(--accent-soft); color: var(--accent); }
+.nav-group + .nav-group { margin-top: .75rem; border-top: 1px solid var(--line); padding-top: .75rem; }
+.utility { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; padding: .5rem; gap: .5rem; color: var(--ink); border: 1px solid transparent; border-radius: var(--radius); background: transparent; font-size: .875rem; font-weight: 500; }
+.utility:hover { border-color: var(--control); background: var(--soft); }
+.hero { display: grid; align-items: center; gap: .75rem; padding-block: .75rem; }
+.hero-copy { min-width: 0; }
+.eyebrow { display: block; margin-bottom: .5rem; font-size: .8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.hero p { margin-top: .75rem; color: var(--muted); }
+.hero-links { display: flex; align-items: center; flex-wrap: wrap; gap: 0 1rem; margin-top: .75rem; }
+.hero-links a { display: inline-flex; align-items: center; min-height: 2.75rem; gap: .5rem; font-size: .875rem; font-weight: 600; }
+.hero-links .primary { padding-inline: .75rem; background: var(--accent); color: var(--on-accent); border-radius: var(--radius); text-decoration: none; }
+.hero-links .primary:hover { text-decoration: underline; }
+.hero-preview { display: block; padding: .75rem; color: var(--ink); background: var(--preview); border: 1px solid var(--line); border-radius: .75rem; text-decoration: none; }
+.hero-preview:hover .preview-title { text-decoration: underline; text-underline-offset: .15em; }
+.preview-caption { display: flex; align-items: center; justify-content: space-between; gap: .5rem; color: var(--accent); font-size: .8125rem; }
+.preview-heading { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.preview-heading .illustration { width: 3.5rem; flex: none; margin-block: -.25rem; }
+.preview-title { display: block; font: 400 1.5rem/1.15 var(--serif); margin-top: .25rem; }
+.preview-flow { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .5rem; list-style: none; padding: 0; margin: .75rem 0 0; }
+.preview-flow li { display: grid; gap: .125rem; border-left: 2px solid var(--control); padding-left: .5rem; font-size: .875rem; }
+.preview-flow li:last-child { border-left-color: var(--accent); }
+.preview-flow span { font-size: .75rem; color: var(--muted); }
+.preview-flow strong { font-variant-numeric: tabular-nums; }
+.route { margin-top: .75rem; }
+.route h2 { font-size: clamp(1.45rem,1.1rem + 1vw,2rem); }
+.route-grid { margin: .75rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.route-grid li { min-width: 0; border-bottom: 1px solid var(--line); }
+.route-link { display: grid; grid-template-columns: 1.5rem minmax(0,1fr) 1.125rem; align-items: center; gap: .5rem; min-height: 3rem; height: 100%; padding: .5rem .25rem; color: var(--ink); text-decoration: none; }
+.route-link:hover { background: var(--accent-soft); }
+.route-link strong { line-height: 1.25; font-size: .9375rem; }
+.route-link .icon { color: var(--accent); }
+.block-index { font-size: .8125rem; font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; }
+.academic { display: grid; gap: .75rem; padding: 0 0 .25rem; }
+.academic dd { margin-top: .25rem; }
+.about { margin-top: .5rem; }
+.block, .reference-section { margin-top: var(--section-space); }
+.block-head { display: flex; align-items: baseline; gap: .75rem; border-top: 1px solid var(--line); padding-top: 1rem; margin-bottom: 1rem; }
+.block-head .block-index { position: relative; top: -.125rem; display: grid; place-items: center; flex: 0 0 1.75rem; min-height: 1.75rem; border: 1px solid var(--line); border-radius: .375rem; }
+.block-head p { margin-top: .5rem; }
+.section-note { margin: 0 0 .75rem; padding-left: .75rem; border-left: 2px solid var(--accent); }
+.disclosure { border-bottom: 1px solid var(--line); }
+.disclosure > summary, .term > summary, .flash > summary { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.75rem; padding: .75rem 0; font-size: .9375rem; }
+.disclosure > summary::after, .term > summary::after, .flash > summary::after { content: ""; flex: 0 0 .45rem; width: .45rem; height: .45rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); margin-right: .375rem; color: var(--accent); }
+:is(.disclosure,.term,.flash)[open] > summary::after { transform: rotate(225deg); }
+:is(.disclosure,.term,.flash) > summary:hover { color: var(--accent); }
+.disclosure-body { padding: 0 0 1rem; }
+.disclosure-body > * + * { margin-top: .75rem; }
+.study-rows { display: grid; gap: .5rem; }
+.study-rows > div { display: grid; gap: .25rem; padding-block: .5rem; border-top: 1px solid var(--line); }
+.study-rows dd p { margin-top: .25rem; }
+.reflection { border-inline-start: 2px solid var(--accent); background: var(--accent-soft); padding: .75rem; color: var(--ink); }
+.case-facts { padding-inline-start: 1.25rem; margin-block: 0; }
+.case-facts li + li { margin-top: .25rem; }
+.figure, .checklist { border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); padding: clamp(.75rem,2vw,1.25rem); }
+.block > .figure, .block > .checklist { margin-bottom: .25rem; }
+.figure figcaption { margin-bottom: .75rem; }
+.figure figcaption p { margin-top: .25rem; }
+.muted, .source { color: var(--muted); }
+.source { font-size: .8125rem; margin-top: .5rem; }
+.source a { display: inline-block; margin-block: .125rem; }
+.choices { display: grid; gap: .5rem; }
+.illustration { display: block; width: min(100%,5.25rem); height: auto; }
+.illustration use { color: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.art-paper { fill: var(--surface); stroke: var(--control); }
+.art-wash { fill: var(--accent-soft); stroke: var(--accent); }
+.art-line { fill: none; stroke: var(--control); }
+.art-accent { fill: none; stroke: var(--accent); }
+.caption-with-art { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.caption-with-art .illustration { width: 3.5rem; flex: none; }
+.illustrated { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.illustrated-three { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.choices.illustrated button { display: grid; justify-items: center; align-content: center; gap: .25rem; padding: .5rem .25rem; text-align: center; }
+.figure-fallback .illustration { margin-bottom: .25rem; }
+@media (min-width: 38rem) {
+  .illustrated { grid-template-columns: repeat(var(--count),minmax(0,1fr)); }
+  .caption-with-art .illustration { width: 4.5rem; }
+}
+.choices button, .bar-choice { width: 100%; min-height: 2.75rem; text-align: start; background: var(--surface); border: 1px solid var(--control); border-radius: var(--radius); padding: .5rem .75rem; line-height: 1.3; font-size: .9375rem; font-weight: 500; }
+.choices button:hover, .bar-choice:hover { background: var(--soft); }
+button[aria-pressed="true"], .bar-choice[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); box-shadow: inset 0 -2px var(--accent); }
+.figure-panel { margin-top: .75rem; padding: .75rem; border-inline-start: 2px solid var(--accent); background: var(--soft); }
+.figure-panel h4, .figure-fallback h4 { margin-bottom: .25rem; }
+.figure-panel dl { display: grid; gap: .25rem; }
+.figure-panel :is(dt,dd), .figure-fallback :is(dt,dd) { display: inline; }
+.figure-panel dt::after, .figure-fallback dt::after { content: " · "; }
+.figure-fallback { padding-left: 1.25rem; }
+.figure-fallback li { margin-top: .75rem; }
+.figure-fallback p + dl, .figure-panel p + dl { margin-top: .5rem; }
+.enhanced .figure-fallback { display: none; }
+.layout:not(.enhanced) .js-only { display: none; }
+.flow > button { position: relative; }
+.flow > button::before { content: attr(data-step); display: inline-block; margin-right: .5rem; color: var(--muted); font-size: .75rem; font-variant-numeric: tabular-nums; }
+.flow > button:not(:last-child)::after { content: ""; position: absolute; height: .5rem; top: calc(100% + 1px); left: 1rem; border-left: 1px solid var(--control); pointer-events: none; }
+.scenario-steps { display: grid; gap: .5rem; padding: 0 0 0 1.25rem; margin-block: .5rem 0; }
+.scenario-steps strong { display: block; }
+.graph-split { display: grid; gap: .75rem; align-items: center; }
+.graph-split .figure-panel { margin-top: 0; }
+.triad { display: block; width: 100%; max-width: 20rem; margin-inline: auto; }
+.triad .zone { cursor: pointer; color: var(--ink); }
+.triad path { fill: var(--soft); stroke: var(--control); stroke-width: 1.5; stroke-linejoin: round; }
+.triad .zone[aria-pressed="true"] { color: var(--accent); }
+.triad .zone[aria-pressed="true"] path { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 3; }
+.triad .zone:focus-visible { outline: none; }
+.triad .zone:focus-visible path { stroke: var(--focus); stroke-width: 5; stroke-dasharray: 5 3; }
+.triad text { fill: currentColor; font: 600 12px system-ui,sans-serif; pointer-events: none; }
+.triad .cid-label { fill: var(--ink); font-size: 14px; }
+.hub { display: grid; gap: .5rem; }
+.hub > span { justify-self: start; padding: .25rem .5rem; border-left: 2px solid var(--accent); color: var(--accent); font-weight: 600; }
+.hub .choices { border-left: 2px solid var(--line); padding-left: .75rem; }
+.layers { width: min(100%,24rem); margin-inline: auto; }
+.layers button { text-align: center; }
+.layer-shape { border: 1px solid var(--control); padding: .375rem; border-radius: var(--radius); }
+.layer-shape > * + * { margin-top: .375rem; }
+.assets { display: flex; align-items: center; justify-content: center; gap: .25rem; min-height: 2.5rem; color: var(--accent); font-size: .8125rem; }
+.timeline button { position: relative; padding-left: 1.5rem; }
+.timeline button::before { position: absolute; content: ""; top: .875rem; left: .5rem; width: .375rem; height: .375rem; border: 1.5px solid currentColor; border-radius: 50%; }
+.timeline time { display: block; font-size: .8125rem; font-variant-numeric: tabular-nums; }
+.timeline span { display: block; margin-top: .25rem; }
+.bars { display: grid; gap: .5rem; }
+.bar-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem .75rem; }
+.bar-top strong, .legend strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bar-track { display: block; height: .5rem; margin-block: .5rem .125rem; background: var(--soft); border-radius: 2px; overflow: hidden; }
+.bar-fill { display: block; width: var(--length); height: 100%; background: var(--bar-total); }
+.subset .bar-track { outline: 1px dashed var(--control); outline-offset: 2px; }
+.subset .bar-choice:nth-child(2) .bar-fill { background: var(--bar-part); }
+.stacked { display: flex; gap: 2px; }
+.stacked button { width: var(--length); min-height: 2.75rem; border: 2px solid transparent; border-radius: .25rem; background: var(--bar-total); }
+.stacked button:nth-child(2) { background: var(--bar-part); }
+.stacked button[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 2px var(--surface); }
+.legend { display: grid; gap: .25rem; margin: .5rem 0 0; padding: 0; list-style: none; font-size: .875rem; }
+.legend .dot { display: inline-block; width: .625rem; height: .625rem; margin-right: .25rem; background: var(--bar-total); }
+.legend li:nth-child(2) .dot { background: var(--bar-part); }
+.cards { display: grid; gap: .5rem; }
+.check-group { min-width: 0; margin: 0; padding: 0; border: 0; border-top: 1px solid var(--line); }
+.check-group legend { padding-right: .5rem; }
+.check-row { display: flex; align-items: flex-start; gap: .5rem; padding: .625rem .25rem; min-height: 2.75rem; cursor: pointer; border-radius: var(--radius); }
+.check-row input { inline-size: 1.125rem; block-size: 1.125rem; flex: none; margin: .125rem 0 0; accent-color: var(--bar-part); }
+.check-row:has(input:checked) { background: var(--accent-soft); color: var(--accent); }
+.check-status { margin: .25rem 0 .75rem; color: var(--accent); font-size: .875rem; font-variant-numeric: tabular-nums; }
+.tools { display: grid; gap: .5rem; }
+.tools label { display: grid; gap: .25rem; font-size: .875rem; font-weight: 500; }
+.tools :is(input,select) { width: 100%; min-width: 0; min-height: 2.75rem; padding: .5rem; background: var(--surface); border: 1px solid var(--control); border-radius: var(--radius); }
+.term, .flash { border-bottom: 1px solid var(--line); }
+.term summary, .flash summary { min-height: 2.75rem; padding-inline: .5rem; }
+.term summary small { margin-right: auto; color: var(--muted); font-weight: 400; }
+.term p, .flash p { padding-inline: .5rem; }
+.term p:last-child, .flash p:last-child { padding-bottom: .75rem; }
+.reference-list { list-style: none; padding: 0; margin: 0; }
+.reference-list li { padding: .75rem 0; border-top: 1px solid var(--line); }
+.reference-list li:target { outline: 2px solid var(--focus); }
+.reference-list p { margin-top: .25rem; }
+.footer { margin-top: 2rem; padding-block: .75rem; border-top: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; font-size: .875rem; }
+@media (max-width: 22rem) {
+  .route-link { grid-template-columns: 1.125rem minmax(0,1fr); }
+  .route-link .icon { display: none; }
+}
+@media (min-width: 23rem) {
+  .choices.cols2, .choices.cols3 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (min-width: 38rem) {
+  .hero { grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: clamp(1.5rem,4vw,3.5rem); padding-block: 1.5rem; }
+  .hero-preview { padding: 1.5rem; }
+  .preview-title { font-size: clamp(1.5rem,2.6vw,2.5rem); }
+  .preview-flow { grid-template-columns: 1fr; gap: .375rem; margin-top: 1rem; }
+  .preview-flow li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; align-items: baseline; padding: .5rem 0 .5rem .75rem; }
+  .route-link { grid-template-columns: 2rem minmax(0,1fr) 1.125rem; gap: .75rem; }
+  .academic, .cards.cols3 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .study-rows > div { grid-template-columns: minmax(0,9.5rem) minmax(0,1fr); gap: .75rem; }
+  .graph-split { grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); }
+  .choices.cols3, .timeline { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .tools { grid-template-columns: minmax(0,2fr) minmax(0,1fr); }
+  .term-list { columns: 2; column-gap: 1rem; }
+  .term, .flash { break-inside: avoid; }
+}
+@media (min-width: 50rem) {
+  .flow { grid-template-columns: repeat(var(--count),minmax(0,1fr)); }
+  .flow > button { text-align: center; }
+  .flow > button::before { display: block; margin: 0 0 .25rem; }
+  .flow > button:not(:last-child)::after { height: auto; width: .5rem; top: 50%; left: calc(100% + 1px); border-left: 0; border-top: 1px solid var(--control); }
+}
+@media (min-width: 62rem) {
+  .layout { display: grid; grid-template-columns: 15rem minmax(0,1fr); align-items: start; }
+  .sidebar { position: sticky; top: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; gap: 1.5rem; padding: 1.25rem 1rem; overflow: auto; border-right: 1px solid var(--line); }
+  .sidebar .brand { align-self: start; }
+  .sidebar nav a { min-height: 2.25rem; margin-block: .125rem; }
+  .side-note { margin-top: auto; color: var(--muted); font-size: .8125rem; }
+  .side-note strong { display: block; }
+  .topbar { min-height: 3.75rem; }
+  .topbar-title { display: block; color: var(--muted); font-size: .875rem; }
+  .topbar .brand, .mobile-nav { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  a, button, summary { transition: background-color 150ms var(--ease), color 150ms var(--ease); }
+}
+@media print {
+  .sidebar, .topbar, .skip, .hero-links, .route, .js-only, .footer a { display: none !important; }
+  .layout { display: block; }
+  .enhanced .figure-fallback { display: block; }
+  .figure, .term, .flash { break-inside: avoid; }
+}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="symbols">
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><rect x="2" y="3" width="8" height="6" rx="1"/><rect x="14" y="15" width="8" height="6" rx="1"/><path d="M6 9v9h8m-3-3 3 3-3 3"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 13h20"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="17" rx="2"/><path d="M9 7h7m-7 4h7M2 7v14a1 1 0 0 0 1 1h14"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-top" viewBox="0 0 24 24"><path d="m6 14 6-6 6 6"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="m12 2 10 18H2L12 2Z"/><path d="M12 9v4m0 4h.01"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4M18 4a3 3 0 0 1 0 6m0 4a5 5 0 0 1 3 5v2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6m0-10h.01"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 5h6v6m0-6-8 8m-1-7H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="a-records" viewBox="0 0 112 72">
+      <rect class="art-paper" x="15" y="16" width="74" height="43" rx="5"/>
+      <rect class="art-wash" x="23" y="9" width="74" height="43" rx="5"/>
+      <path class="art-line" d="M23 21h74M35 32h16m-16 9h29m17-9h5m-5 9h5"/>
+      <path class="art-accent" d="M65 33h8m-8 8h8M31 15h2"/>
+    </symbol>
+    <symbol id="a-files" viewBox="0 0 112 72">
+      <path class="art-paper" d="M24 12h40l13 13v34H24z"/>
+      <path class="art-line" d="M64 12v13h13M34 24h20m-20 9h26m-26 9h15"/>
+      <rect class="art-wash" x="62" y="38" width="27" height="23" rx="4"/>
+      <path class="art-accent" d="M68 38v-4a7.5 7.5 0 0 1 15 0v4m-7.5 9v5"/>
+    </symbol>
+    <symbol id="a-mail" viewBox="0 0 112 72">
+      <rect class="art-paper" x="16" y="14" width="76" height="43" rx="5"/>
+      <path class="art-line" d="m18 18 36 22 36-22M18 53l22-17m32 0 18 15"/>
+      <circle class="art-wash" cx="86" cy="51" r="14"/>
+      <path class="art-accent" d="M86 44v7m0 5h.01"/>
+    </symbol>
+    <symbol id="a-chat" viewBox="0 0 112 72">
+      <circle class="art-paper" cx="34" cy="25" r="9"/>
+      <path class="art-paper" d="M15 59v-4a19 19 0 0 1 38 0v4z"/>
+      <path class="art-wash" d="M58 13h37a5 5 0 0 1 5 5v16a5 5 0 0 1-5 5H72l-11 8v-8h-3a5 5 0 0 1-5-5V18a5 5 0 0 1 5-5z"/>
+      <path class="art-accent" d="M64 25h5m6 0h5m6 0h5"/>
+    </symbol>
+    <symbol id="a-share" viewBox="0 0 112 72">
+      <rect class="art-paper" x="16" y="15" width="48" height="42" rx="4"/>
+      <path class="art-line" d="M16 28h48M16 39h48m-48 9h48M32 28v29m16-29v29"/>
+      <rect class="art-wash" x="72" y="25" width="25" height="18" rx="3"/>
+      <path class="art-accent" d="M53 34h24m-5-5 5 5-5 5m1-12 11.5 8 11.5-8"/>
+    </symbol>
+    <symbol id="a-document" viewBox="0 0 112 72">
+      <rect class="art-paper" x="30" y="10" width="53" height="53" rx="4"/>
+      <path class="art-line" d="M50 24h22M50 36h22M50 48h22"/>
+      <path class="art-accent" d="m38 23 2 2 4-4m-6 14 2 2 4-4m-6 14 2 2 4-4"/>
+      <path class="art-line" d="M21 20v35m71-35v35"/>
+    </symbol>
+    <symbol id="a-shield" viewBox="0 0 112 72">
+      <rect class="art-paper" x="20" y="22" width="72" height="32" rx="4"/>
+      <path class="art-line" d="M28 31h8m-8 15h11m37-15h8m-10 15h10"/>
+      <path class="art-wash" d="M56 9 75 16v18c0 12-7 21-19 28-12-7-19-16-19-28V16z"/>
+      <path class="art-accent" d="m48 35 6 6 11-13"/>
+    </symbol>
+    <symbol id="a-bell" viewBox="0 0 112 72">
+      <rect class="art-paper" x="22" y="11" width="68" height="50" rx="5"/>
+      <path class="art-wash" d="M41 48h30c-4-3-5-7-5-13a10 10 0 0 0-20 0c0 6-1 10-5 13z"/>
+      <path class="art-accent" d="M52 52a4 4 0 0 0 8 0m-4-31v3m-16 2-4-4m36 4 4-4"/>
+    </symbol>
+    <symbol id="a-people" viewBox="0 0 112 72">
+      <circle class="art-paper" cx="41" cy="25" r="10"/>
+      <path class="art-paper" d="M21 60v-5a20 20 0 0 1 40 0v5z"/>
+      <circle class="art-wash" cx="73" cy="22" r="9"/>
+      <path class="art-wash" d="M62 56v-7a16 16 0 0 1 32 0v7z"/>
+      <path class="art-accent" d="m71 48 4 4 8-9"/>
+    </symbol>
+    <symbol id="a-devices" viewBox="0 0 112 72">
+      <rect class="art-paper" x="15" y="16" width="61" height="37" rx="4"/>
+      <path class="art-line" d="M15 45h61m-37 8v7m-12 0h32"/>
+      <rect class="art-wash" x="64" y="22" width="26" height="40" rx="4"/>
+      <path class="art-accent" d="m70 42 5 5 9-11M30 32h13m5 0h6"/>
+    </symbol>
+    <symbol id="a-plan" viewBox="0 0 112 72">
+      <rect class="art-paper" x="21" y="14" width="70" height="47" rx="5"/>
+      <path class="art-wash" d="M21 25h70V19a5 5 0 0 0-5-5H26a5 5 0 0 0-5 5z"/>
+      <path class="art-accent" d="M33 10v9m46-9v9m-44 25 5 5 10-11"/>
+      <path class="art-line" d="M58 39h21m-21 9h14"/>
+    </symbol>
+  </svg>
+  <div class="layout" id="portal">
+  <aside class="sidebar" aria-label="Navegação lateral">
+    <a class="brand" href="#inicio"><span class="brand-mark"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span><span>Grupo 6</span></a><nav aria-label="Seções do portal">
+    <div class="nav-group"><a href="#inicio" data-section="inicio" aria-current="location"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>Início</a>
+      <a href="#fundamentos" data-section="fundamentos"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-database"></use></svg>Fundamentos e ameaças</a>
+<a href="#defesa" data-section="defesa"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg>Segurança e defesa</a>
+<a href="#lgpd" data-section="lgpd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"></use></svg>Proteção de dados e LGPD</a>
+<a href="#caso" data-section="caso"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-case"></use></svg>Caso Banco Inter</a>
+<a href="#boas-praticas" data-section="boas-praticas"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Boas práticas e conclusão</a>
+    </div>
+    <div class="nav-group"><a href="#glossario" data-section="glossario"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Glossário</a><a href="#revisao" data-section="revisao"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cards"></use></svg>Revisão</a><a href="#referencias" data-section="referencias"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-link"></use></svg>Referências</a></div>
+  </nav>
+    <p class="side-note"><strong>IFS · Campus Itabaiana</strong>Fundamentos de Sistemas de Informação</p>
+  </aside>
+  <main id="conteudo" tabindex="-1">
+    <header class="topbar">
+      <a class="brand" href="#inicio"><span class="brand-mark"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span><span>Grupo 6</span></a>
+      <span class="topbar-title">Guia do seminário · Fundamentos de Sistemas de Informação</span>
+      <details class="mobile-nav" id="mobile-nav"><summary class="utility"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg> Seções</summary><nav aria-label="Seções do portal no celular">
+    <div class="nav-group"><a href="#inicio" data-section="inicio" aria-current="location"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>Início</a>
+      <a href="#fundamentos" data-section="fundamentos"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-database"></use></svg>Fundamentos e ameaças</a>
+<a href="#defesa" data-section="defesa"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg>Segurança e defesa</a>
+<a href="#lgpd" data-section="lgpd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"></use></svg>Proteção de dados e LGPD</a>
+<a href="#caso" data-section="caso"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-case"></use></svg>Caso Banco Inter</a>
+<a href="#boas-praticas" data-section="boas-praticas"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Boas práticas e conclusão</a>
+    </div>
+    <div class="nav-group"><a href="#glossario" data-section="glossario"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Glossário</a><a href="#revisao" data-section="revisao"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cards"></use></svg>Revisão</a><a href="#referencias" data-section="referencias"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-link"></use></svg>Referências</a></div>
+  </nav></details>
+      <button class="utility js-only" id="theme" type="button" aria-label="Modo escuro" aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg></button>
+    </header>
+    <div class="main-inner">
+      <section id="inicio" aria-labelledby="titulo-portal" tabindex="-1">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Tema 6 · Unidade 2 · 20 minutos</span>
+        <h1 id="titulo-portal"><span class="title-prefix">Guia de Estudo do Grupo 6<span class="sr-only"> - </span></span>Segurança da Informação e Proteção de Dados</h1>
+        <p>Guia rápido para acompanhar os cinco blocos do seminário.</p>
+        <div class="hero-links">
+          <a class="primary" href="#roteiro-titulo">Ver os blocos <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg></a>
+          <a href="#glossario">Consultar glossário</a>
+        </div>
+      </div>
+      <a class="hero-preview" href="#chart-transformacao">
+    <span class="preview-caption"><span>Exemplo · Unidade 1</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg></span>
+    <span class="preview-heading"><span class="preview-title">Do dado à decisão</span><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-records"></use></svg></span>
+    <ol class="preview-flow"><li>
+      <span>Dados</span><strong>250</strong>
+    </li>
+<li>
+      <span>Informação</span><strong>Saldo de R$ 250</strong>
+    </li>
+<li>
+      <span>Conhecimento</span><strong>Padrão de gastos</strong>
+    </li>
+<li>
+      <span>Decisão</span><strong>Rever o orçamento</strong>
+    </li></ol>
+  </a>
+    </div>
+    <section class="route" aria-labelledby="roteiro-titulo">
+      <h2 id="roteiro-titulo" tabindex="-1">Roteiro do seminário</h2>
+      <ol class="route-grid"><li><a class="route-link" href="#fundamentos">
+        <span class="block-index" aria-hidden="true">1</span><strong>Fundamentos e ameaças</strong><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+      </a></li>
+<li><a class="route-link" href="#defesa">
+        <span class="block-index" aria-hidden="true">2</span><strong>Segurança e defesa</strong><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+      </a></li>
+<li><a class="route-link" href="#lgpd">
+        <span class="block-index" aria-hidden="true">3</span><strong>Proteção de dados e LGPD</strong><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+      </a></li>
+<li><a class="route-link" href="#caso">
+        <span class="block-index" aria-hidden="true">4</span><strong>Caso Banco Inter</strong><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+      </a></li>
+<li><a class="route-link" href="#boas-praticas">
+        <span class="block-index" aria-hidden="true">5</span><strong>Boas práticas e conclusão</strong><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+      </a></li></ol>
+    </section>
+    <details class="disclosure about"><summary>Sobre o seminário · IFS Itabaiana</summary>
+      <dl class="academic">
+        <div><dt>Instituto Federal de Sergipe (IFS)</dt><dd>Campus Itabaiana · Bacharelado em Ciência da Computação</dd></div>
+        <div><dt>Fundamentos de Sistemas de Informação</dt><dd>Professor Gleiser Rodrigues de Melo</dd></div>
+        <div><dt>Integrantes</dt><dd>Antony · Letícia · Mikael · Andrey · Isabelly</dd></div>
+      </dl>
+    </details>
+  </section>
+      <section class="block" id="fundamentos" aria-labelledby="heading-fundamentos" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">1</span><div>
+      <span class="eyebrow">Antony</span>
+      <h2 id="heading-fundamentos">Fundamentos e ameaças</h2>
+      <p>Proteger a informação mantém as decisões confiáveis e ajuda a evitar perdas, interrupções e danos à reputação.</p>
+    </div></header>
+    <figure class="figure" data-chart="transformacao" aria-labelledby="chart-transformacao">
+    <figcaption>
+      <div><h3 id="chart-transformacao" tabindex="-1">Transformação dos dados</h3><p class="muted">Siga o exemplo do saldo bancário</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices flow" style="--count:4"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-transformacao" data-step="1">Dados</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-transformacao" data-step="2">Informação</button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-transformacao" data-step="3">Conhecimento</button>
+<button type="button" data-item="3" aria-pressed="false" aria-controls="panel-transformacao" data-step="4">Decisão</button></div>
+      <div class="figure-panel" id="panel-transformacao" aria-live="polite" aria-atomic="true"><h4>Dados</h4><p>Registros brutos, como um CPF, um valor ou uma data.</p><dl><div><dt>Exemplo</dt><dd>250, sem unidade, data ou contexto.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Dados</h4><p>Registros brutos, como um CPF, um valor ou uma data.</p><dl><div><dt>Exemplo</dt><dd>250, sem unidade, data ou contexto.</dd></div></dl></li>
+<li><h4>Informação</h4><p>Dados organizados com contexto, como o extrato de uma conta.</p><dl><div><dt>Exemplo</dt><dd>Saldo de R$ 250 na conta em 10 de abril.</dd></div></dl></li>
+<li><h4>Conhecimento</h4><p>Interpretação e identificação de padrões.</p><dl><div><dt>Exemplo</dt><dd>Ao comparar os extratos, a cliente percebe que os gastos com delivery aumentam todo mês.</dd></div></dl></li>
+<li><h4>Decisão</h4><p>Ação orientada por informações e conhecimento.</p><dl><div><dt>Exemplo</dt><dd>A cliente reorganiza o orçamento e define um limite mensal para delivery.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="#ref-aula01">Aula 01 do IFS</a> · <a href="#ref-aula03">Aula 03 do IFS</a></p>
+  </figure><details class="disclosure">
+  <summary>O sistema de informação e a Unidade 1</summary><div class="disclosure-body"><p>Um Sistema de Informação (SI) reúne pessoas, processos e tecnologia para coletar, processar, armazenar e distribuir informações.</p>
+<p>A segurança protege os dados e as informações que dão base às decisões.</p><blockquote class="reflection">Imagine que dados pessoais e bancários de milhares de clientes fossem expostos. Quem poderia ser prejudicado?</blockquote></div></details><details class="disclosure">
+  <summary>Ameaça, vulnerabilidade, risco e incidente</summary><div class="disclosure-body"><dl class="study-rows"><div>
+  <dt>Ameaça</dt><dd>Evento ou agente com potencial de causar dano.</dd></div>
+<div>
+  <dt>Vulnerabilidade</dt><dd>Fragilidade que pode ser explorada por uma ameaça.</dd></div>
+<div>
+  <dt>Risco</dt><dd>Possibilidade de consequências negativas decorrentes de ameaças e vulnerabilidades, considerando probabilidade e impacto.</dd></div>
+<div>
+  <dt>Incidente de segurança</dt><dd>Evento adverso confirmado que compromete propriedades de segurança.</dd></div></dl><figure class="figure" data-chart="risco" aria-labelledby="chart-risco">
+    <figcaption>
+      <div><h3 id="chart-risco" tabindex="-1">Como um risco se concretiza</h3><p class="muted">Compare dois cenários fictícios</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices cols2" style="--count:2"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-risco">Phishing</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-risco">Software desatualizado</button></div>
+      <div class="figure-panel" id="panel-risco" aria-live="polite" aria-atomic="true"><h4>Phishing</h4><p>Exemplo fictício. O uso indevido da conta confirma o incidente.</p><ol class="scenario-steps"><li><strong>Ameaça</strong>Uma pessoa recebe uma mensagem falsa que imita o banco.</li>
+<li><strong>Exploração da fraqueza</strong>A pessoa confia na mensagem e fornece suas credenciais.</li>
+<li><strong>Incidente confirmado</strong>A conta é acessada e usada sem autorização.</li>
+<li><strong>Impactos possíveis</strong>Exposição de informações pessoais e tentativas de fraude.</li></ol></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Phishing</h4><p>Exemplo fictício. O uso indevido da conta confirma o incidente.</p><ol class="scenario-steps"><li><strong>Ameaça</strong>Uma pessoa recebe uma mensagem falsa que imita o banco.</li>
+<li><strong>Exploração da fraqueza</strong>A pessoa confia na mensagem e fornece suas credenciais.</li>
+<li><strong>Incidente confirmado</strong>A conta é acessada e usada sem autorização.</li>
+<li><strong>Impactos possíveis</strong>Exposição de informações pessoais e tentativas de fraude.</li></ol></li>
+<li><h4>Software desatualizado</h4><p>Exemplo fictício. A falha indica um risco. O acesso indevido confirma o incidente.</p><ol class="scenario-steps"><li><strong>Ameaça</strong>Uma pessoa mal-intencionada tenta obter acesso a informações da empresa.</li>
+<li><strong>Exploração da fraqueza</strong>A tentativa se aproveita de uma falha conhecida que permanece em uma versão desatualizada da aplicação.</li>
+<li><strong>Incidente confirmado</strong>Registros da empresa são acessados sem autorização.</li>
+<li><strong>Impactos possíveis</strong>Exposição de dados pessoais e custos de investigação e contenção.</li></ol></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.ibm.com/br-pt/think/topics/information-security" target="_blank" rel="noopener noreferrer">IBM <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure></div></details><details class="disclosure">
+  <summary>Explorar malware, phishing e outras ameaças</summary><div class="disclosure-body"><figure class="figure" data-chart="ameacas" aria-labelledby="chart-ameacas">
+    <figcaption>
+      <div><h3 id="chart-ameacas" tabindex="-1">Mapa das ameaças</h3><p class="muted">Escolha uma situação para ver como se proteger</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices illustrated" style="--count:4"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-ameacas">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-files"></use></svg><span>Malware</span>
+    </button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-ameacas">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-mail"></use></svg><span>Phishing</span>
+    </button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-ameacas">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-chat"></use></svg><span>Engenharia social</span>
+    </button>
+<button type="button" data-item="3" aria-pressed="false" aria-controls="panel-ameacas">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-share"></use></svg><span>Riscos internos</span>
+    </button></div>
+      <div class="figure-panel" id="panel-ameacas" aria-live="polite" aria-atomic="true"><h4>Malware</h4><p>Software malicioso que pode roubar, alterar ou bloquear dados.</p><dl><div><dt>Exemplo</dt><dd>Arquivos ficam bloqueados e aparece um pedido de resgate.</dd></div>
+<div><dt>Prevenção</dt><dd>Atualizações, proteção de endpoints, backup e restrição de privilégios.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-files"></use></svg><h4>Malware</h4><p>Software malicioso que pode roubar, alterar ou bloquear dados.</p><dl><div><dt>Exemplo</dt><dd>Arquivos ficam bloqueados e aparece um pedido de resgate.</dd></div>
+<div><dt>Prevenção</dt><dd>Atualizações, proteção de endpoints, backup e restrição de privilégios.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-mail"></use></svg><h4>Phishing</h4><p>Mensagens ou páginas falsas para obter dados ou induzir ações.</p><dl><div><dt>Exemplo</dt><dd>Um e-mail imita seu banco e pede que você confirme a senha.</dd></div>
+<div><dt>Prevenção</dt><dd>Verificar remetente e endereço, usar MFA e treinar a equipe.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-chat"></use></svg><h4>Engenharia social</h4><p>Manipulação de pessoas para conseguir acesso ou informação.</p><dl><div><dt>Exemplo</dt><dd>Alguém se passa pelo suporte e pede um código de autenticação.</dd></div>
+<div><dt>Prevenção</dt><dd>Confirmar identidades por canais confiáveis e não compartilhar códigos.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-share"></use></svg><h4>Riscos internos</h4><p>Ações acidentais ou intencionais de pessoas com acesso legítimo.</p><dl><div><dt>Exemplo</dt><dd>Uma planilha de clientes é enviada ao destinatário errado.</dd></div>
+<div><dt>Prevenção</dt><dd>Privilégio mínimo, conscientização, revisão de acessos e registros.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.ibm.com/br-pt/think/topics/information-security" target="_blank" rel="noopener noreferrer">IBM <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure></div></details>
+  </section>
+<section class="block" id="defesa" aria-labelledby="heading-defesa" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">2</span><div>
+      <span class="eyebrow">Letícia</span>
+      <h2 id="heading-defesa">Segurança e defesa</h2>
+      <p>A tríade CID define o que proteger. A política de segurança e os controles em camadas orientam como proteger.</p>
+    </div></header>
+    <figure class="figure" data-chart="cid" aria-labelledby="chart-cid">
+    <figcaption>
+      <div><h3 id="chart-cid" tabindex="-1">Tríade CID</h3><p class="muted">Toque em um princípio para ver o que ele protege</p></div>
+      
+    </figcaption>
+    <div class="js-only graph-split">
+      <svg class="triad" viewBox="0 0 320 220" role="group" aria-label="Três áreas da tríade CID">
+    <g class="zone" role="button" tabindex="0" data-item="0" aria-pressed="true" aria-controls="panel-cid" aria-label="Confidencialidade">
+        <path d="M160 14 220 111 160 143 100 111Z"/><text x="160" y="108" text-anchor="middle" aria-hidden="true">Confidencialidade</text>
+      </g>
+<g class="zone" role="button" tabindex="0" data-item="1" aria-pressed="false" aria-controls="panel-cid" aria-label="Integridade">
+        <path d="M100 111 160 143 160 209 38 209Z"/><text x="104" y="189" text-anchor="middle" aria-hidden="true">Integridade</text>
+      </g>
+<g class="zone" role="button" tabindex="0" data-item="2" aria-pressed="false" aria-controls="panel-cid" aria-label="Disponibilidade">
+        <path d="M220 111 282 209 160 209 160 143Z"/><text x="215" y="189" text-anchor="middle" aria-hidden="true">Disponibilidade</text>
+      </g>
+    <circle cx="160" cy="140" r="19" fill="var(--surface)" stroke="var(--control)" pointer-events="none" aria-hidden="true"/>
+    <text class="cid-label" x="160" y="145" text-anchor="middle" aria-hidden="true">CID</text>
+  </svg>
+      <div class="figure-panel" id="panel-cid" aria-live="polite" aria-atomic="true"><h4>Confidencialidade</h4><p>A informação só deve ser acessada por quem tem autorização.</p><dl><div><dt>Exemplo bancário</dt><dd>Somente o cliente e profissionais autorizados consultam dados da conta.</dd></div>
+<div><dt>Se falhar</dt><dd>Uma pessoa sem autorização consegue ler o extrato de outra.</dd></div>
+<div><dt>Como proteger</dt><dd>Controle de acesso, autenticação, criptografia.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Confidencialidade</h4><p>A informação só deve ser acessada por quem tem autorização.</p><dl><div><dt>Exemplo bancário</dt><dd>Somente o cliente e profissionais autorizados consultam dados da conta.</dd></div>
+<div><dt>Se falhar</dt><dd>Uma pessoa sem autorização consegue ler o extrato de outra.</dd></div>
+<div><dt>Como proteger</dt><dd>Controle de acesso, autenticação, criptografia.</dd></div></dl></li>
+<li><h4>Integridade</h4><p>Os dados precisam permanecer corretos e protegidos contra alterações indevidas.</p><dl><div><dt>Exemplo bancário</dt><dd>O valor de uma transferência não deve ser alterado durante o processamento.</dd></div>
+<div><dt>Se falhar</dt><dd>O valor errado é debitado após uma alteração indevida.</dd></div>
+<div><dt>Como proteger</dt><dd>Validação, trilhas de auditoria, controle de mudanças.</dd></div></dl></li>
+<li><h4>Disponibilidade</h4><p>Serviços e informações devem estar acessíveis quando necessários.</p><dl><div><dt>Exemplo bancário</dt><dd>O aplicativo bancário precisa permitir acesso aos serviços previstos.</dd></div>
+<div><dt>Se falhar</dt><dd>Clientes ficam temporariamente sem acesso ao serviço de pagamentos.</dd></div>
+<div><dt>Como proteger</dt><dd>Redundância, backups, monitoramento e recuperação.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://loja.grupoa.com.br/sistemas-de-informacao-p991456" target="_blank" rel="noopener noreferrer">Baltzan e Phillips (2012), cap. 4 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><details class="disclosure">
+  <summary>Política de Segurança da Informação</summary><div class="disclosure-body"><figure class="figure" data-chart="psi" aria-labelledby="chart-psi">
+    <figcaption>
+      <div><h3 id="chart-psi" tabindex="-1">Pessoas, processos e tecnologia</h3><p class="muted">Uma Política de Segurança da Informação (PSI) define diretrizes, regras e responsabilidades para proteger as informações da organização.</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="hub"><span>PSI</span><div class="choices cols3" style="--count:3"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-psi">Pessoas</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-psi">Processos</button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-psi">Tecnologia</button></div></div>
+      <div class="figure-panel" id="panel-psi" aria-live="polite" aria-atomic="true"><h4>Pessoas</h4><p>Responsabilidades, treinamento, comportamento seguro e reporte de incidentes.</p><dl><div><dt>Na prática</dt><dd>Uma funcionária reconhece uma mensagem de phishing e a comunica pelo canal interno.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Pessoas</h4><p>Responsabilidades, treinamento, comportamento seguro e reporte de incidentes.</p><dl><div><dt>Na prática</dt><dd>Uma funcionária reconhece uma mensagem de phishing e a comunica pelo canal interno.</dd></div></dl></li>
+<li><h4>Processos</h4><p>Classificação da informação, procedimentos, resposta a incidentes e revisão periódica.</p><dl><div><dt>Na prática</dt><dd>A empresa segue um procedimento com responsáveis definidos para registrar, conter e investigar incidentes.</dd></div></dl></li>
+<li><h4>Tecnologia</h4><p>Gestão de identidade, restrições de acesso, criptografia, logs e medidas preventivas.</p><dl><div><dt>Na prática</dt><dd>O sistema de cadastro exige autenticação multifator.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fonte</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure></div></details><details class="disclosure">
+  <summary>Defesa em camadas e normas ISO</summary><div class="disclosure-body"><figure class="figure" data-chart="camadas" aria-labelledby="chart-camadas">
+    <figcaption>
+      <div><h3 id="chart-camadas" tabindex="-1">Defesa em camadas</h3><p class="muted">Se uma barreira falhar, as outras ainda ajudam a reduzir o risco</p></div>
+      
+    </figcaption>
+    <div class="js-only graph-split">
+      <div class="choices layers"><div class="layer-shape"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-camadas">Física</button><div class="layer-shape"><button type="button" data-item="1" aria-pressed="false" aria-controls="panel-camadas">Lógica</button><div class="layer-shape"><button type="button" data-item="2" aria-pressed="false" aria-controls="panel-camadas">Administrativa</button><span class="assets"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-database"></use></svg> Ativos informacionais</span></div></div></div></div>
+      <div class="figure-panel" id="panel-camadas" aria-live="polite" aria-atomic="true"><h4>Física</h4><p>Proteção dos ambientes e equipamentos</p><dl><div><dt>Controles</dt><dd>Controle de entrada, visitantes, acesso a salas e proteção de dispositivos.</dd></div>
+<div><dt>Na prática</dt><dd>Somente a equipe autorizada entra na sala de servidores, com a entrada registrada e o ambiente monitorado.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Física</h4><p>Proteção dos ambientes e equipamentos</p><dl><div><dt>Controles</dt><dd>Controle de entrada, visitantes, acesso a salas e proteção de dispositivos.</dd></div>
+<div><dt>Na prática</dt><dd>Somente a equipe autorizada entra na sala de servidores, com a entrada registrada e o ambiente monitorado.</dd></div></dl></li>
+<li><h4>Lógica</h4><p>Proteção de contas, redes e aplicações</p><dl><div><dt>Controles</dt><dd>MFA, criptografia, firewalls, atualizações, segmentação e monitoramento.</dd></div>
+<div><dt>Na prática</dt><dd>Mesmo se uma senha vazar, o segundo fator pode impedir o uso indevido da conta.</dd></div></dl></li>
+<li><h4>Administrativa</h4><p>Regras e governança</p><dl><div><dt>Controles</dt><dd>PSI, treinamento, auditoria, classificação de dados e plano de resposta a incidentes.</dd></div>
+<div><dt>Na prática</dt><dd>A equipe ensaia o plano de resposta e usa auditorias e avaliações de risco para atualizar os controles.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://loja.grupoa.com.br/sistemas-de-informacao-p991456" target="_blank" rel="noopener noreferrer">Baltzan e Phillips (2012), cap. 4 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><dl class="study-rows"><div>
+  <dt>ISO/IEC 27001</dt><dd>Estabelece requisitos para um Sistema de Gestão de Segurança da Informação (SGSI).</dd></div>
+<div>
+  <dt>ISO/IEC 27002</dt><dd>Oferece orientações para controles de segurança da informação.</dd></div></dl><p class="source"><strong>Fontes</strong> · <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener noreferrer">ISO/IEC 27001 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.iso.org/standard/75652.html" target="_blank" rel="noopener noreferrer">ISO/IEC 27002 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div></details>
+  </section>
+<section class="block" id="lgpd" aria-labelledby="heading-lgpd" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">3</span><div>
+      <span class="eyebrow">Mikael</span>
+      <h2 id="heading-lgpd">Proteção de dados e LGPD</h2>
+      <p>A LGPD protege os direitos das pessoas quando seus dados são tratados.</p>
+    </div></header>
+    <p class="section-note">Todo tratamento exige uma base legal aplicável. Consentimento é uma das hipóteses previstas na LGPD.</p><figure class="figure" data-chart="principios" aria-labelledby="chart-principios">
+    <figcaption>
+      <div><h3 id="chart-principios" tabindex="-1">Seis princípios da LGPD</h3><p class="muted">Seis dos dez princípios do art. 6º</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices cols3" style="--count:6"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-principios">Finalidade</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-principios">Necessidade</button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-principios">Transparência</button>
+<button type="button" data-item="3" aria-pressed="false" aria-controls="panel-principios">Segurança</button>
+<button type="button" data-item="4" aria-pressed="false" aria-controls="panel-principios">Prevenção</button>
+<button type="button" data-item="5" aria-pressed="false" aria-controls="panel-principios">Prestação de contas</button></div>
+      <div class="figure-panel" id="panel-principios" aria-live="polite" aria-atomic="true"><h4>Finalidade</h4><p>Tratar dados para propósitos legítimos, específicos, explícitos e informados.</p><dl><div><dt>Exemplo empresarial</dt><dd>Explicar por que um cadastro solicita determinada informação.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>No formulário, o banco informa que usará o endereço para enviar o cartão.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Finalidade</h4><p>Tratar dados para propósitos legítimos, específicos, explícitos e informados.</p><dl><div><dt>Exemplo empresarial</dt><dd>Explicar por que um cadastro solicita determinada informação.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>No formulário, o banco informa que usará o endereço para enviar o cartão.</dd></div></dl></li>
+<li><h4>Necessidade</h4><p>Limitar todo o tratamento ao mínimo necessário à finalidade.</p><dl><div><dt>Exemplo empresarial</dt><dd>Não solicitar dados irrelevantes para abrir uma conta.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>Para enviar o cartão, pede o endereço de entrega e dispensa perguntas sem relação com esse serviço.</dd></div></dl></li>
+<li><h4>Transparência</h4><p>Informar de forma clara como os dados são utilizados.</p><dl><div><dt>Exemplo empresarial</dt><dd>Disponibilizar aviso de privacidade compreensível.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>Antes do cadastro, o cliente encontra um aviso claro sobre uso, retenção e canais de contato.</dd></div></dl></li>
+<li><h4>Segurança</h4><p>Proteger os dados contra acessos e eventos indevidos.</p><dl><div><dt>Exemplo empresarial</dt><dd>Adotar controle de acesso e criptografia adequados.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>Somente equipes autorizadas consultam informações cadastrais, com registro de acessos.</dd></div></dl></li>
+<li><h4>Prevenção</h4><p>Atuar para evitar danos antes que aconteçam.</p><dl><div><dt>Exemplo empresarial</dt><dd>Realizar revisões de risco e orientar os profissionais.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>A equipe avalia periodicamente os riscos e corrige permissões excessivas antes de um incidente.</dd></div></dl></li>
+<li><h4>Responsabilização e prestação de contas</h4><p>Demonstrar adoção e eficácia das medidas de conformidade.</p><dl><div><dt>Exemplo empresarial</dt><dd>Manter registros de controles e evidências das ações adotadas.</dd></div>
+<div><dt>Aplicação em um banco</dt><dd>A empresa documenta as revisões de acesso e guarda evidências da eficácia dos controles.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fonte</strong> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><details class="disclosure">
+  <summary>Dados pessoais e tratamento</summary><div class="disclosure-body"><p>A Lei nº 13.709/2018 protege a liberdade, a privacidade e o livre desenvolvimento da personalidade no tratamento de dados pessoais.</p><dl class="study-rows"><div>
+  <dt>Dado pessoal</dt><dd>Informação sobre uma pessoa natural identificada ou identificável. Exemplos incluem nome, CPF, telefone, e-mail e dados financeiros associados à pessoa.</dd></div>
+<div>
+  <dt>Tratamento</dt><dd>Qualquer operação com dados pessoais, como coleta, consulta, armazenamento, utilização, compartilhamento ou eliminação.</dd></div></dl><p class="source"><strong>Fonte</strong> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div></details><details class="disclosure">
+  <summary>O que a empresa precisa fazer</summary><div class="disclosure-body"><figure class="figure" data-chart="obrigacoes" aria-labelledby="chart-obrigacoes">
+    <figcaption>
+      <div><h3 id="chart-obrigacoes" tabindex="-1">Da LGPD à prática</h3><p class="muted">Veja o que cada artigo pede da empresa</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices illustrated illustrated-three" style="--count:3"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-obrigacoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-document"></use></svg><span>Art. 6º</span>
+    </button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-obrigacoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-shield"></use></svg><span>Art. 46</span>
+    </button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-obrigacoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-bell"></use></svg><span>Art. 48</span>
+    </button></div>
+      <div class="figure-panel" id="panel-obrigacoes" aria-live="polite" aria-atomic="true"><h4>Art. 6º · Princípios</h4><p>Orienta o uso dos dados pessoais. Defina a finalidade e limite a coleta ao necessário.</p><dl><div><dt>Na prática</dt><dd>Um cadastro pede apenas os dados que precisa usar.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-document"></use></svg><h4>Art. 6º · Princípios</h4><p>Orienta o uso dos dados pessoais. Defina a finalidade e limite a coleta ao necessário.</p><dl><div><dt>Na prática</dt><dd>Um cadastro pede apenas os dados que precisa usar.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-shield"></use></svg><h4>Art. 46 · Proteção</h4><p>Exige medidas técnicas e administrativas para proteger dados pessoais.</p><dl><div><dt>Na prática</dt><dd>Só a equipe autorizada consegue abrir o cadastro de clientes.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-bell"></use></svg><h4>Art. 48 · Comunicação</h4><p>Exige que o controlador comunique à ANPD e aos titulares incidentes que possam causar risco ou dano relevante.</p><dl><div><dt>Na prática</dt><dd>A equipe avalia a exposição dos dados e comunica quando exigido.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis" target="_blank" rel="noopener noreferrer">Orientações da ANPD <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><p>O controlador comunica à ANPD e aos titulares se o incidente puder causar risco ou dano relevante. O prazo geral é de 3 dias úteis após saber que houve impacto sobre dados pessoais, salvo prazo legal específico.</p><p class="source"><strong>Fontes</strong> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis" target="_blank" rel="noopener noreferrer">Orientações da ANPD <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html" target="_blank" rel="noopener noreferrer">Resolução CD/ANPD nº 15/2024 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div></details><details class="disclosure">
+  <summary>Ciclo dos dados em um banco</summary><div class="disclosure-body"><figure class="figure" data-chart="ciclo" aria-labelledby="chart-ciclo">
+    <figcaption>
+      <div><h3 id="chart-ciclo" tabindex="-1">Ciclo de tratamento dos dados</h3><p class="muted">Do cadastro ao descarte</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices flow" style="--count:5"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-ciclo" data-step="1">Coleta</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-ciclo" data-step="2">Armazenamento</button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-ciclo" data-step="3">Utilização</button>
+<button type="button" data-item="3" aria-pressed="false" aria-controls="panel-ciclo" data-step="4">Proteção e monitoramento</button>
+<button type="button" data-item="4" aria-pressed="false" aria-controls="panel-ciclo" data-step="5">Resposta e descarte</button></div>
+      <div class="figure-panel" id="panel-ciclo" aria-live="polite" aria-atomic="true"><h4>Coleta</h4><p>Definir a finalidade e coletar somente dados necessários.</p><dl><div><dt>No cadastro bancário</dt><dd>O banco coleta dados de identificação necessários para abrir a conta.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Coleta</h4><p>Definir a finalidade e coletar somente dados necessários.</p><dl><div><dt>No cadastro bancário</dt><dd>O banco coleta dados de identificação necessários para abrir a conta.</dd></div></dl></li>
+<li><h4>Armazenamento</h4><p>Organizar, classificar e restringir acessos.</p><dl><div><dt>No cadastro bancário</dt><dd>O cadastro fica em ambiente com acesso restrito às equipes autorizadas.</dd></div></dl></li>
+<li><h4>Utilização</h4><p>Usar os dados conforme as finalidades e bases legais aplicáveis.</p><dl><div><dt>No cadastro bancário</dt><dd>A equipe consulta o cadastro para verificar a identidade do cliente nos serviços contratados.</dd></div></dl></li>
+<li><h4>Proteção e monitoramento</h4><p>Monitorar, prevenir incidentes e revisar controles.</p><dl><div><dt>No cadastro bancário</dt><dd>O banco monitora consultas fora do padrão e revisa as permissões de acesso.</dd></div></dl></li>
+<li><h4>Resposta e descarte</h4><p>Investigar incidentes e comunicar quando exigido; manter rotinas de retenção e descarte.</p><dl><div><dt>No cadastro bancário</dt><dd>A equipe verifica incidentes e comunica quando exigido. Dados sem necessidade de retenção são eliminados conforme as regras aplicáveis.</dd></div></dl></li></ol>
+    <p class="source">Etapas ilustrativas. A proteção acompanha todo o tratamento.</p>
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis" target="_blank" rel="noopener noreferrer">Orientações da ANPD <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure></div></details>
+  </section>
+<section class="block" id="caso" aria-labelledby="heading-caso" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">4</span><div>
+      <span class="eyebrow">Andrey</span>
+      <h2 id="heading-caso">Caso Banco Inter</h2>
+      <p>Em 2018, o MPDFT documentou a exposição de dados e a Justiça homologou um acordo.</p>
+    </div></header>
+    <figure class="figure" data-chart="registros" aria-labelledby="chart-registros">
+    <figcaption class="caption-with-art">
+      <div><h3 id="chart-registros" tabindex="-1">Dados documentados no incidente</h3><p class="muted">A barra verde representa parte do total cadastral</p></div>
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-records"></use></svg>
+    </figcaption>
+    <div class="js-only">
+      <div class="bars subset"><button class="bar-choice" type="button" data-item="0" aria-pressed="true" aria-controls="panel-registros">
+      <span class="bar-top"><span>Registros cadastrais de correntistas comprometidos</span><strong>19.961 registros</strong></span>
+      <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--length:100%"></span></span>
+    </button>
+<button class="bar-choice" type="button" data-item="1" aria-pressed="false" aria-controls="panel-registros">
+      <span class="bar-top"><span>Registros do conjunto com dados bancários</span><strong>13.207 registros</strong></span>
+      <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--length:66.16401983868543%"></span></span>
+    </button></div>
+      <div class="figure-panel" id="panel-registros" aria-live="polite" aria-atomic="true"><h4>Registros cadastrais de correntistas comprometidos · 19.961 registros</h4><p>Contagem de registros cadastrais comprometidos divulgada pelo MPDFT.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Registros cadastrais de correntistas comprometidos · 19.961 registros</h4><p>Contagem de registros cadastrais comprometidos divulgada pelo MPDFT.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li>
+<li><h4>Registros do conjunto com dados bancários · 13.207 registros</h4><p>Registros que também continham dados bancários, dentro do conjunto de 19.961.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li></ol>
+    
+    
+  </figure><details class="disclosure">
+  <summary>Outros dados expostos e limites do caso</summary><div class="disclosure-body"><ul class="case-facts"><li>O MPDFT informou ainda o comprometimento de 4.840 dados de clientes de outros bancos que transacionaram com usuários do Inter.</li>
+<li>Houve exposição de certificados digitais já revogados e de uma chave privada do banco.</li>
+<li>As contagens descrevem registros documentados. O total de pessoas afetadas permanece indeterminado nesse recorte.</li></ul>
+    <p>Causa técnica específica não demonstrada nas fontes consultadas.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div></details><details class="disclosure">
+  <summary>Linha do tempo de 2018</summary><div class="disclosure-body"><figure class="figure" data-chart="timeline" aria-labelledby="chart-timeline">
+    <figcaption>
+      <div><h3 id="chart-timeline" tabindex="-1">Linha do tempo</h3><p class="muted">Da investigação ao acordo</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices timeline"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-timeline"><time datetime="2018-05-08">8 de maio de 2018</time><span>Instauração do inquérito civil público</span></button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-timeline"><time datetime="2018-07-30">30 de julho de 2018</time><span>Ajuizamento da ação civil pública</span></button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-timeline"><time datetime="2018-12-18">18 de dezembro de 2018</time><span>Homologação judicial do acordo</span></button></div>
+      <div class="figure-panel" id="panel-timeline" aria-live="polite" aria-atomic="true"><h4>Instauração do inquérito civil público</h4><p><time datetime="2018-05-08">8 de maio de 2018</time></p><p>O MPDFT abriu investigação sobre o suposto vazamento. Notícia publicada em 9 de maio.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10035-mpdft-investiga-suposto-vazamento-de-dados-de-clientes-do-banco-inter" target="_blank" rel="noopener noreferrer">MPDFT · 9 mai. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Instauração do inquérito civil público</h4><p><time datetime="2018-05-08">8 de maio de 2018</time></p><p>O MPDFT abriu investigação sobre o suposto vazamento. Notícia publicada em 9 de maio.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10035-mpdft-investiga-suposto-vazamento-de-dados-de-clientes-do-banco-inter" target="_blank" rel="noopener noreferrer">MPDFT · 9 mai. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li>
+<li><h4>Ajuizamento da ação civil pública</h4><p><time datetime="2018-07-30">30 de julho de 2018</time></p><p>O MPDFT pediu R$ 10 milhões por danos morais coletivos. Notícia publicada em 31 de julho.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li>
+<li><h4>Homologação judicial do acordo</h4><p><time datetime="2018-12-18">18 de dezembro de 2018</time></p><p>A Justiça homologou acordo de R$ 1,5 milhão. Notícia publicada em 19 de dezembro.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li></ol>
+    
+    
+  </figure></div></details><details class="disclosure">
+  <summary>Valores do pedido e do acordo</summary><div class="disclosure-body"><figure class="figure" data-chart="valores" aria-labelledby="chart-valores">
+    <figcaption>
+      <div><h3 id="chart-valores" tabindex="-1">Pedido judicial e acordo</h3><p class="muted">Dois atos jurídicos em momentos diferentes</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="bars bars"><button class="bar-choice" type="button" data-item="0" aria-pressed="true" aria-controls="panel-valores">
+      <span class="bar-top"><span>Pedido na ação civil pública</span><strong>R$ 10.000.000</strong></span>
+      <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--length:100%"></span></span>
+    </button>
+<button class="bar-choice" type="button" data-item="1" aria-pressed="false" aria-controls="panel-valores">
+      <span class="bar-top"><span>Acordo judicial homologado</span><strong>R$ 1.500.000</strong></span>
+      <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--length:15%"></span></span>
+    </button></div>
+      <div class="figure-panel" id="panel-valores" aria-live="polite" aria-atomic="true"><h4>Pedido na ação civil pública · R$ 10.000.000</h4><p>Indenização por danos morais coletivos solicitada pelo MPDFT na ação de julho de 2018.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Pedido na ação civil pública · R$ 10.000.000</h4><p>Indenização por danos morais coletivos solicitada pelo MPDFT na ação de julho de 2018.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li>
+<li><h4>Acordo judicial homologado · R$ 1.500.000</h4><p>Valor do acordo homologado pela Justiça em 18 de dezembro de 2018.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><figure class="figure" data-chart="reparticao" aria-labelledby="chart-reparticao">
+    <figcaption>
+      <div><h3 id="chart-reparticao" tabindex="-1">Destino dos recursos do acordo</h3><p class="muted">As duas parcelas somam R$ 1,5 milhão</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div><div class="stacked"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-reparticao" style="--length:66.66666666666666%" aria-label="Instituições públicas de combate a crimes cibernéticos · R$ 1.000.000"></button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-reparticao" style="--length:33.33333333333333%" aria-label="Instituições de caridade · R$ 500.000"></button></div><ul class="legend"><li><span class="dot" aria-hidden="true"></span><strong>R$ 1.000.000</strong> · Instituições públicas de combate a crimes cibernéticos</li>
+<li><span class="dot" aria-hidden="true"></span><strong>R$ 500.000</strong> · Instituições de caridade</li></ul></div>
+      <div class="figure-panel" id="panel-reparticao" aria-live="polite" aria-atomic="true"><h4>Instituições públicas de combate a crimes cibernéticos · R$ 1.000.000</h4><p>Parcela do acordo destinada a instituições públicas de combate a crimes cibernéticos.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Instituições públicas de combate a crimes cibernéticos · R$ 1.000.000</h4><p>Parcela do acordo destinada a instituições públicas de combate a crimes cibernéticos.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li>
+<li><h4>Instituições de caridade · R$ 500.000</h4><p>Parcela do acordo destinada a instituições de caridade.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></li></ol>
+    
+    
+  </figure><p>O acordo reparou danos morais coletivos por via judicial. O caso é anterior à vigência das sanções da LGPD.</p><p class="source"><strong>Fonte</strong> · <a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p></div></details>
+  </section>
+<section class="block" id="boas-praticas" aria-labelledby="heading-boas-praticas" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">5</span><div>
+      <span class="eyebrow">Isabelly</span>
+      <h2 id="heading-boas-praticas">Boas práticas e conclusão</h2>
+      <p>Pessoas, tecnologia e gestão dividem a responsabilidade pela proteção dos dados.</p>
+    </div></header>
+    <figure class="figure" data-chart="acoes" aria-labelledby="chart-acoes">
+    <figcaption>
+      <div><h3 id="chart-acoes" tabindex="-1">Onde aplicar as boas práticas</h3><p class="muted">Explore as ações de cada área</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices illustrated illustrated-three" style="--count:3"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-acoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-people"></use></svg><span>Pessoas</span>
+    </button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-acoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-devices"></use></svg><span>Tecnologia</span>
+    </button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-acoes">
+      <svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-plan"></use></svg><span>Gestão</span>
+    </button></div>
+      <div class="figure-panel" id="panel-acoes" aria-live="polite" aria-atomic="true"><h4>Pessoas</h4><p>Desconfie de mensagens suspeitas e preserve senhas e códigos.</p><dl><div><dt>Na prática</dt><dd>Abra o aplicativo oficial do banco para conferir uma mensagem suspeita.</dd></div></dl></div>
+    </div>
+    <ol class="figure-fallback"><li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-people"></use></svg><h4>Pessoas</h4><p>Desconfie de mensagens suspeitas e preserve senhas e códigos.</p><dl><div><dt>Na prática</dt><dd>Abra o aplicativo oficial do banco para conferir uma mensagem suspeita.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-devices"></use></svg><h4>Tecnologia</h4><p>Use autenticação multifator, atualizações e backups testados.</p><dl><div><dt>Na prática</dt><dd>Um segundo fator ajuda a proteger a conta quando a senha é exposta.</dd></div></dl></li>
+<li><svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-plan"></use></svg><h4>Gestão</h4><p>Defina regras de acesso e prepare a resposta a incidentes.</p><dl><div><dt>Na prática</dt><dd>Defina quem recebe e investiga uma suspeita de vazamento.</dd></div></dl></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.microsoft.com/pt-br/security/business/security-101/what-is-data-protection#data-protection-defined" target="_blank" rel="noopener noreferrer">Microsoft <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure><details class="disclosure" id="checklist-browser">
+  <summary>Abrir checklist de boas práticas</summary><div class="disclosure-body"><div class="checklist" id="checklist"><p class="check-status js-only" id="check-status" role="status"></p><div class="cards cols3"><fieldset class="check-group">
+    <legend>Pessoas</legend>
+    <label class="check-row"><input type="checkbox" autocomplete="off"><span>Reconhecer mensagens suspeitas.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Não compartilhar senhas ou códigos.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Participar de treinamentos.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Comunicar situações anormais.</span></label>
+  </fieldset>
+<fieldset class="check-group">
+    <legend>Tecnologia</legend>
+    <label class="check-row"><input type="checkbox" autocomplete="off"><span>Utilizar autenticação multifator.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Manter sistemas atualizados.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Implementar controles de acesso.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Utilizar criptografia quando apropriado.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Manter backups testados e monitoramento.</span></label>
+  </fieldset>
+<fieldset class="check-group">
+    <legend>Gestão</legend>
+    <label class="check-row"><input type="checkbox" autocomplete="off"><span>Definir uma PSI.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Classificar informações.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Revisar permissões de acesso.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Avaliar riscos periodicamente.</span></label>
+<label class="check-row"><input type="checkbox" autocomplete="off"><span>Manter planos de resposta a incidentes.</span></label>
+  </fieldset></div></div></div></details><details class="disclosure">
+  <summary>Impactos para clientes, empresa e governança</summary><div class="disclosure-body"><figure class="figure" data-chart="impactos" aria-labelledby="chart-impactos">
+    <figcaption>
+      <div><h3 id="chart-impactos" tabindex="-1">Mapa de impactos</h3><p class="muted">Consequências possíveis em qualquer vazamento de dados</p></div>
+      
+    </figcaption>
+    <div class="js-only">
+      <div class="choices cols3" style="--count:3"><button type="button" data-item="0" aria-pressed="true" aria-controls="panel-impactos">Clientes</button>
+<button type="button" data-item="1" aria-pressed="false" aria-controls="panel-impactos">Empresa</button>
+<button type="button" data-item="2" aria-pressed="false" aria-controls="panel-impactos">Governança</button></div>
+      <div class="figure-panel" id="panel-impactos" aria-live="polite" aria-atomic="true"><h4>Clientes</h4><p>Exposição de dados pessoais, risco de golpes e fraudes e preocupação com a privacidade.</p></div>
+    </div>
+    <ol class="figure-fallback"><li><h4>Clientes</h4><p>Exposição de dados pessoais, risco de golpes e fraudes e preocupação com a privacidade.</p></li>
+<li><h4>Empresa</h4><p>Custos de investigação e remediação, possíveis responsabilidades jurídicas, interrupções e perda de confiança.</p></li>
+<li><h4>Governança</h4><p>Revisão de controles, políticas, processos e estratégias de proteção para reduzir riscos e responder a incidentes.</p></li></ol>
+    
+    <p class="source"><strong>Fontes</strong> · <a href="https://www.ibm.com/br-pt/think/topics/information-security" target="_blank" rel="noopener noreferrer">IBM <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a> · <a href="https://www.microsoft.com/pt-br/security/business/security-101/what-is-data-protection#data-protection-defined" target="_blank" rel="noopener noreferrer">Microsoft <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </figure></div></details><details class="disclosure">
+  <summary>Três ideias para levar do seminário</summary><div class="disclosure-body"><dl class="study-rows"><div>
+  <dt>Informação tem valor</dt><dd>Como vimos na Unidade 1, os sistemas transformam dados em informações que orientam decisões.</dd></div>
+<div>
+  <dt>Segurança sustenta a confiança</dt><dd>Preservar confidencialidade, integridade e disponibilidade ajuda a manter operações e relações confiáveis.</dd></div>
+<div>
+  <dt>Responsabilidade é compartilhada</dt><dd>Pessoas, tecnologia e gestão precisam atuar juntas.</dd></div></dl><blockquote class="reflection">Um sistema de informação pode ser considerado eficiente se não consegue proteger adequadamente as informações que utiliza?</blockquote></div></details>
+  </section>
+      <section class="reference-section" id="glossario" aria-labelledby="glossario-titulo" tabindex="-1">
+    <h2 id="glossario-titulo">Glossário</h2>
+    <details class="disclosure" id="glossary-browser">
+  <summary>Pesquisar termos</summary><div class="disclosure-body"><div class="tools js-only">
+      <label>Termo ou sigla <input id="glossary-query" type="search" placeholder="Ex. PSI ou backup"></label>
+      <label>Categoria <select id="glossary-category">
+        <option value="">Todas as categorias</option>
+        <option>Ameaças</option>
+<option>Fundamentos</option>
+<option>Governança</option>
+<option>Privacidade</option>
+<option>Segurança</option>
+<option>Tecnologia</option>
+      </select></label>
+    </div><p class="source js-only" id="glossary-status" role="status"></p>
+    <div id="glossary-results"><div class="term-list"><details class="term" data-term="0">
+    <summary>Ameaça</summary>
+    <p>Evento ou agente com potencial para produzir um dano.</p>
+    <p><strong>Exemplo</strong> · Tentativa de invasão.</p>
+  </details>
+<details class="term" data-term="1">
+    <summary>ANPD <small>Agência Nacional de Proteção de Dados</small></summary>
+    <p>Autoridade brasileira responsável por zelar pela proteção de dados pessoais e pela aplicação da LGPD.</p>
+    <p><strong>Exemplo</strong> · Receber comunicações de incidentes sujeitos à obrigação legal.</p>
+  </details>
+<details class="term" data-term="2">
+    <summary>Autenticação</summary>
+    <p>Verificação da identidade de uma pessoa ou sistema.</p>
+    <p><strong>Exemplo</strong> · Entrar na conta com senha e segundo fator.</p>
+  </details>
+<details class="term" data-term="3">
+    <summary>Autenticação multifator <small>MFA</small></summary>
+    <p>Uso de mais de um fator para verificar a identidade.</p>
+    <p><strong>Exemplo</strong> · Senha e aplicativo autenticador.</p>
+  </details>
+<details class="term" data-term="4">
+    <summary>Backup</summary>
+    <p>Cópia para permitir recuperação de informações.</p>
+    <p><strong>Exemplo</strong> · Restaurar arquivos após perda.</p>
+  </details>
+<details class="term" data-term="5">
+    <summary>Confidencialidade <small>C</small></summary>
+    <p>Propriedade que restringe o acesso às pessoas e aos sistemas autorizados.</p>
+    <p><strong>Exemplo</strong> · Restringir consultas a dados de clientes.</p>
+  </details>
+<details class="term" data-term="6">
+    <summary>Conhecimento</summary>
+    <p>Compreensão obtida ao interpretar informações.</p>
+    <p><strong>Exemplo</strong> · Usar extratos para reconhecer um padrão de despesas.</p>
+  </details>
+<details class="term" data-term="7">
+    <summary>Controlador</summary>
+    <p>Agente a quem competem as decisões referentes ao tratamento de dados pessoais.</p>
+    <p><strong>Exemplo</strong> · Empresa que define a finalidade da coleta.</p>
+  </details>
+<details class="term" data-term="8">
+    <summary>Criptografia</summary>
+    <p>Técnicas que transformam dados para protegê-los de leitura indevida.</p>
+    <p><strong>Exemplo</strong> · Cifrar dados em trânsito.</p>
+  </details>
+<details class="term" data-term="9">
+    <summary>Dado</summary>
+    <p>Registro ou fato bruto sem contexto suficiente para certa decisão.</p>
+    <p><strong>Exemplo</strong> · Um número isolado.</p>
+  </details>
+<details class="term" data-term="10">
+    <summary>Dados pessoais</summary>
+    <p>Informação relacionada à pessoa natural identificada ou identificável.</p>
+    <p><strong>Exemplo</strong> · CPF ou e-mail associado a uma pessoa.</p>
+  </details>
+<details class="term" data-term="11">
+    <summary>Dados pessoais sensíveis</summary>
+    <p>Dados sobre origem racial ou étnica, convicção religiosa, opinião política, filiação sindical ou a organização de caráter religioso, filosófico ou político, saúde, vida sexual, ou dado genético ou biométrico vinculado a pessoa natural.</p>
+    <p><strong>Exemplo</strong> · Dados de saúde no prontuário de uma pessoa.</p>
+  </details>
+<details class="term" data-term="12">
+    <summary>Defesa em profundidade</summary>
+    <p>Emprego de várias medidas de proteção complementares.</p>
+    <p><strong>Exemplo</strong> · Controle físico, MFA e treinamento.</p>
+  </details>
+<details class="term" data-term="13">
+    <summary>Disponibilidade <small>D</small></summary>
+    <p>Propriedade de manter a informação acessível quando necessária.</p>
+    <p><strong>Exemplo</strong> · Recuperar um serviço após falha.</p>
+  </details>
+<details class="term" data-term="14">
+    <summary>Engenharia social</summary>
+    <p>Técnica de manipulação de pessoas para obter informações ou acesso.</p>
+    <p><strong>Exemplo</strong> · Falso funcionário de suporte.</p>
+  </details>
+<details class="term" data-term="15">
+    <summary>Firewall</summary>
+    <p>Controle que permite ou bloqueia tráfego de rede conforme regras.</p>
+    <p><strong>Exemplo</strong> · Restringir conexões recebidas por um servidor.</p>
+  </details>
+<details class="term" data-term="16">
+    <summary>Incidente de segurança</summary>
+    <p>Evento adverso confirmado que compromete propriedades de segurança.</p>
+    <p><strong>Exemplo</strong> · Acesso não autorizado a registros.</p>
+  </details>
+<details class="term" data-term="17">
+    <summary>Informação</summary>
+    <p>Dado organizado e contextualizado para produzir significado.</p>
+    <p><strong>Exemplo</strong> · Saldo com data e identificação da conta.</p>
+  </details>
+<details class="term" data-term="18">
+    <summary>Integridade <small>I</small></summary>
+    <p>Propriedade de manter dados corretos e sem alterações indevidas.</p>
+    <p><strong>Exemplo</strong> · Verificar modificações em transações.</p>
+  </details>
+<details class="term" data-term="19">
+    <summary>ISO/IEC 27001</summary>
+    <p>Norma com requisitos para um SGSI.</p>
+    <p><strong>Exemplo</strong> · Definir e avaliar um sistema de gestão de segurança.</p>
+  </details>
+<details class="term" data-term="20">
+    <summary>ISO/IEC 27002</summary>
+    <p>Norma com orientações sobre controles de segurança da informação.</p>
+    <p><strong>Exemplo</strong> · Consultar orientações ao revisar os controles de acesso.</p>
+  </details>
+<details class="term" data-term="21">
+    <summary>LGPD <small>Lei nº 13.709/2018</small></summary>
+    <p>Lei Geral de Proteção de Dados Pessoais.</p>
+    <p><strong>Exemplo</strong> · Regras para uso de dados em cadastros.</p>
+  </details>
+<details class="term" data-term="22">
+    <summary>Malware</summary>
+    <p>Programa criado para executar ações maliciosas.</p>
+    <p><strong>Exemplo</strong> · Ransomware que bloqueia arquivos.</p>
+  </details>
+<details class="term" data-term="23">
+    <summary>Operador</summary>
+    <p>Agente que trata dados pessoais em nome do controlador.</p>
+    <p><strong>Exemplo</strong> · Prestadora que processa cadastros sob instruções da empresa contratante.</p>
+  </details>
+<details class="term" data-term="24">
+    <summary>Phishing</summary>
+    <p>Fraude que usa mensagens ou páginas falsas para enganar pessoas.</p>
+    <p><strong>Exemplo</strong> · Página bancária falsificada.</p>
+  </details>
+<details class="term" data-term="25">
+    <summary>Política de Segurança da Informação <small>PSI</small></summary>
+    <p>Diretrizes e responsabilidades organizacionais para proteger informações.</p>
+    <p><strong>Exemplo</strong> · Regras de acesso e reporte de incidentes.</p>
+  </details>
+<details class="term" data-term="26">
+    <summary>Ransomware</summary>
+    <p>Malware que bloqueia acesso a dados ou sistemas e exige resgate.</p>
+    <p><strong>Exemplo</strong> · Arquivos ficam indisponíveis e surge uma exigência de pagamento.</p>
+  </details>
+<details class="term" data-term="27">
+    <summary>Risco</summary>
+    <p>Possibilidade de consequências negativas associadas a cenários incertos.</p>
+    <p><strong>Exemplo</strong> · Exposição de cadastros.</p>
+  </details>
+<details class="term" data-term="28">
+    <summary>SGSI <small>Sistema de Gestão de Segurança da Informação</small></summary>
+    <p>Estrutura de gestão para estabelecer, manter e melhorar a segurança da informação.</p>
+    <p><strong>Exemplo</strong> · Programa organizacional orientado pela ISO/IEC 27001.</p>
+  </details>
+<details class="term" data-term="29">
+    <summary>Sistema de Informação <small>SI</small></summary>
+    <p>Conjunto de recursos e processos que coleta, trata e distribui informações.</p>
+    <p><strong>Exemplo</strong> · Sistema que processa operações bancárias.</p>
+  </details>
+<details class="term" data-term="30">
+    <summary>Tratamento de dados</summary>
+    <p>Operação envolvendo dados pessoais, como coletar, consultar, compartilhar ou excluir.</p>
+    <p><strong>Exemplo</strong> · Atualizar o cadastro de um cliente.</p>
+  </details>
+<details class="term" data-term="31">
+    <summary>Vulnerabilidade</summary>
+    <p>Fraqueza explorável em um sistema ou processo.</p>
+    <p><strong>Exemplo</strong> · Aplicação desatualizada.</p>
+  </details></div></div></div></details>
+  </section>
+      <section class="reference-section" id="revisao" aria-labelledby="revisao-titulo" tabindex="-1">
+    <h2 id="revisao-titulo">Revisão rápida</h2>
+    <details class="disclosure" id="review-browser">
+  <summary>Abrir os cartões de revisão</summary><div class="disclosure-body"><div class="term-list">
+      <details class="flash"><summary>Dado, informação e conhecimento</summary><p>250 é um dado bruto. Saber que é o saldo da conta em uma data dá contexto e gera informação. Reconhecer um padrão ao comparar saldos gera conhecimento.</p></details>
+<details class="flash"><summary>Ameaça e vulnerabilidade</summary><p>Uma ameaça tem potencial de causar dano, como um golpista. A vulnerabilidade é uma fraqueza, como uma senha previsível.</p></details>
+<details class="flash"><summary>Risco e incidente</summary><p>Risco é a possibilidade de um evento e de suas consequências. Incidente é um evento adverso que ocorreu e comprometeu a segurança.</p></details>
+<details class="flash"><summary>Tríade CID</summary><p>Confidencialidade protege o acesso. Integridade preserva a correção. Disponibilidade mantém a informação acessível quando necessária.</p></details>
+<details class="flash"><summary>Política de Segurança da Informação</summary><p>A PSI define diretrizes e responsabilidades. Por exemplo, orienta quem tem acesso a um cadastro e como comunicar um incidente.</p></details>
+<details class="flash"><summary>Defesa em profundidade</summary><p>Combina proteções físicas, lógicas e administrativas. Se uma senha for comprometida, a MFA ainda pode proteger a conta.</p></details>
+<details class="flash"><summary>Princípios da LGPD</summary><p>Os seis vistos aqui são finalidade, necessidade, transparência, segurança, prevenção e responsabilização e prestação de contas. O art. 6º reúne dez princípios.</p></details>
+<details class="flash"><summary>Segurança da informação e proteção de dados</summary><p>Segurança preserva a confidencialidade, integridade e disponibilidade de informações em geral. A proteção de dados pessoais também exige finalidade, base legal e respeito aos direitos das pessoas.</p></details>
+    </div></div></details>
+  </section>
+      <section class="reference-section" id="referencias" aria-labelledby="referencias-titulo" tabindex="-1">
+    <h2 id="referencias-titulo">Referências</h2>
+    <details class="disclosure" id="references-browser">
+  <summary>Ver bibliografia e fontes oficiais</summary><div class="disclosure-body"><ul class="reference-list"><li id="ref-hintz" tabindex="-1">
+    <strong>HINTZBERGEN, Jule et al. <cite>Fundamentos de segurança da informação: com base na ISO 27001 e na ISO 27002.</cite> 2018.</strong>
+    <p class="muted">Rio de Janeiro: Brasport. Veja os capítulos 3 (conceitos e riscos), 5 e 6 (políticas e organização), e 9 a 12 (acesso, criptografia, segurança física e operacional).</p>
+    <p class="source"><a href="https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10" target="_blank" rel="noopener noreferrer">Consultar Hintzbergen et al. (2018) <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-baltzan" tabindex="-1">
+    <strong>BALTZAN, Paige; PHILLIPS, Amy. <cite>Sistemas de informação.</cite> 2012.</strong>
+    <p class="muted">Porto Alegre: AMGH. Cap. 4, Ética e segurança da informação. O cap. 8 desta edição trata de operações e cadeia de suprimentos.</p>
+    <p class="source"><a href="https://loja.grupoa.com.br/sistemas-de-informacao-p991456" target="_blank" rel="noopener noreferrer">Consultar Baltzan e Phillips (2012), cap. 4 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-aula01" tabindex="-1">
+    <strong>MELO, Gleiser Rodrigues de. <cite>Aula 01: Fundamentos de Sistemas de Informação.</cite> 2026.</strong>
+    <p class="muted">Material da disciplina. Dados, informação, conhecimento, sistemas e atividades de SI.</p>
+    
+  </li>
+<li id="ref-aula03" tabindex="-1">
+    <strong>INSTITUTO FEDERAL DE SERGIPE. <cite>Aula 03: Sistemas de informação baseados em computador.</cite> 2026.</strong>
+    <p class="muted">Material da disciplina. Recursos humanos, hardware, software, dados e redes.</p>
+    
+  </li>
+<li id="ref-lei" tabindex="-1">
+    <strong>BRASIL. <cite>Lei nº 13.709, de 14 de agosto de 2018: Lei Geral de Proteção de Dados Pessoais.</cite> 2018.</strong>
+    <p class="muted">Especialmente artigos 5º, 6º, 46 e 48. Consultar texto vigente e alterações.</p>
+    <p class="source"><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">Consultar LGPD no Planalto <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-anpd" tabindex="-1">
+    <strong>AGÊNCIA NACIONAL DE PROTEÇÃO DE DADOS. <cite>Comunicação de Incidente de Segurança.</cite> 2022, atualizada em 2026.</strong>
+    <p class="muted">Procedimento de comunicação e perguntas frequentes sobre incidentes.</p>
+    <p class="source"><a href="https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis" target="_blank" rel="noopener noreferrer">Consultar Orientações da ANPD <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-mp_maio" tabindex="-1">
+    <strong>MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS. <cite>MPDFT investiga suposto vazamento de dados de clientes do Banco Inter.</cite> 2018.</strong>
+    <p class="muted">Notícia publicada em 9 maio 2018.</p>
+    <p class="source"><a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10035-mpdft-investiga-suposto-vazamento-de-dados-de-clientes-do-banco-inter" target="_blank" rel="noopener noreferrer">Consultar MPDFT · 9 mai. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-mp_julho" tabindex="-1">
+    <strong>MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS. <cite>MPDFT ajuíza ação contra o Banco Inter por vazamento de dados pessoais.</cite> 2018.</strong>
+    <p class="muted">Notícia publicada em 31 jul. 2018.</p>
+    <p class="source"><a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais" target="_blank" rel="noopener noreferrer">Consultar MPDFT · 31 jul. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-mp_dezembro" tabindex="-1">
+    <strong>MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS. <cite>Banco Inter: acordo destinará R$ 1,5 milhão para caridade e combate a crimes cibernéticos.</cite> 2018.</strong>
+    <p class="muted">Notícia publicada em 19 dez. 2018, sobre homologação do acordo em 18 dez.</p>
+    <p class="source"><a href="https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31" target="_blank" rel="noopener noreferrer">Consultar MPDFT · 19 dez. 2018 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-ibm" tabindex="-1">
+    <strong>IBM. <cite>O que é a segurança da informação?</cite> s.d..</strong>
+    <p class="muted">Visão geral da proteção de informações corporativas.</p>
+    <p class="source"><a href="https://www.ibm.com/br-pt/think/topics/information-security" target="_blank" rel="noopener noreferrer">Consultar IBM <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-microsoft" tabindex="-1">
+    <strong>MICROSOFT. <cite>O que é a proteção de dados?</cite> s.d..</strong>
+    <p class="muted">Visão geral de estratégias de proteção, descoberta e controle.</p>
+    <p class="source"><a href="https://www.microsoft.com/pt-br/security/business/security-101/what-is-data-protection#data-protection-defined" target="_blank" rel="noopener noreferrer">Consultar Microsoft <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-regimento" tabindex="-1">
+    <strong>MELO, Gleiser Rodrigues de. <cite>Regimento e roteiro do projeto de seminários: Unidade 2.</cite> 2026.</strong>
+    <p class="muted">Revisão de 26 out. 2026. Requisitos do material de apoio e das apresentações.</p>
+    
+  </li>
+<li id="ref-fichamento" tabindex="-1">
+    <strong>GRUPO DO TEMA 6. <cite>Fichamento — Segurança da Informação e Proteção de Dados.</cite> s.d..</strong>
+    <p class="muted">Síntese de Hintzbergen et al., LGPD, IBM, Microsoft e ação civil pública do MPDFT.</p>
+    
+  </li>
+<li id="ref-roteiro" tabindex="-1">
+    <strong>GRUPO DO TEMA 6. <cite>Roteiro colaborativo — Tema 6.</cite> s.d..</strong>
+    <p class="muted">Planejamento dos cinco blocos e das intervenções da plateia.</p>
+    
+  </li>
+<li id="ref-iso27001" tabindex="-1">
+    <strong>ISO; IEC. <cite>ISO/IEC 27001:2022 — Information security management systems — Requirements.</cite> 2022.</strong>
+    <p class="muted">Resumo oficial dos requisitos do SGSI.</p>
+    <p class="source"><a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener noreferrer">Consultar ISO/IEC 27001 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-iso27002" tabindex="-1">
+    <strong>ISO; IEC. <cite>ISO/IEC 27002:2022 — Information security controls.</cite> 2022.</strong>
+    <p class="muted">Resumo oficial das orientações sobre controles de segurança.</p>
+    <p class="source"><a href="https://www.iso.org/standard/75652.html" target="_blank" rel="noopener noreferrer">Consultar ISO/IEC 27002 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-regol" tabindex="-1">
+    <strong>CONSELHO DIRETOR DA ANPD. <cite>Resolução CD/ANPD nº 15, de 24 de abril de 2024.</cite> 2024.</strong>
+    <p class="muted">Regulamento de Comunicação de Incidente de Segurança. Veja os critérios e os arts. 6º e 9º para os prazos.</p>
+    <p class="source"><a href="https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html" target="_blank" rel="noopener noreferrer">Consultar Resolução CD/ANPD nº 15/2024 <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li>
+<li id="ref-anpd_inst" tabindex="-1">
+    <strong>AGÊNCIA NACIONAL DE PROTEÇÃO DE DADOS. <cite>Institucional.</cite> s.d..</strong>
+    <p class="muted">Nome atual, missão e competências da agência reguladora.</p>
+    <p class="source"><a href="https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional" target="_blank" rel="noopener noreferrer">Consultar Institucional da ANPD <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span class="sr-only"> (abre em nova aba)</span></a></p>
+  </li></ul></div></details>
+  </section>
+      <footer class="footer"><span>Material de apoio · IFS Itabaiana</span><a href="#inicio">Voltar ao início <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-top"></use></svg></a></footer>
+    </div>
+  </main>
+  </div>
+  <script>
+'use strict';
+// Fonte editorial do portal. O conteúdo estático do HTML mantém a leitura disponível sem JavaScript.
+const siteData = {
+  "seminario": {
+    "titulo": "Segurança da Informação e Proteção de Dados",
+    "descricao": "Guia rápido para acompanhar os cinco blocos do seminário.",
+    "professor": "Gleiser Rodrigues de Melo",
+    "instituicao": "Instituto Federal de Sergipe (IFS)",
+    "campus": "Campus Itabaiana",
+    "disciplina": "Fundamentos de Sistemas de Informação",
+    "unidade": "Unidade 2",
+    "tema": "Tema 6",
+    "integrantes": [
+      "Antony",
+      "Letícia",
+      "Mikael",
+      "Andrey",
+      "Isabelly"
+    ],
+    "curso": "Bacharelado em Ciência da Computação",
+    "duracao": "20 minutos",
+    "exemplosCapa": [
+      "250",
+      "Saldo de R$ 250",
+      "Padrão de gastos",
+      "Rever o orçamento"
+    ],
+    "nomeGuia": "Guia de Estudo do Grupo 6"
+  },
+  "introducao": {
+    "pergunta": "Imagine que dados pessoais e bancários de milhares de clientes fossem expostos. Quem poderia ser prejudicado?",
+    "ligacao": "A segurança protege os dados e as informações que dão base às decisões.",
+    "titulo": "Por que proteger a informação?",
+    "contexto": [
+      "Empresas usam informações para operar, conhecer clientes, administrar processos e tomar decisões.",
+      "Exposição, alteração ou indisponibilidade podem gerar riscos financeiros, operacionais, jurídicos e reputacionais."
+    ],
+    "si": "Um Sistema de Informação (SI) reúne pessoas, processos e tecnologia para coletar, processar, armazenar e distribuir informações."
+  },
+  "fluxoUnidade1": [
+    {
+      "titulo": "Dados",
+      "descricao": "Registros brutos, como um CPF, um valor ou uma data.",
+      "exemplo": "250, sem unidade, data ou contexto."
+    },
+    {
+      "titulo": "Informação",
+      "descricao": "Dados organizados com contexto, como o extrato de uma conta.",
+      "exemplo": "Saldo de R$ 250 na conta em 10 de abril."
+    },
+    {
+      "titulo": "Conhecimento",
+      "descricao": "Interpretação e identificação de padrões.",
+      "exemplo": "Ao comparar os extratos, a cliente percebe que os gastos com delivery aumentam todo mês."
+    },
+    {
+      "titulo": "Decisão",
+      "descricao": "Ação orientada por informações e conhecimento.",
+      "exemplo": "A cliente reorganiza o orçamento e define um limite mensal para delivery."
+    }
+  ],
+  "conceitos": [
+    {
+      "titulo": "Ameaça",
+      "resumo": "Evento ou agente com potencial de causar dano.",
+      "exemplo": "Um criminoso tenta obter credenciais de acesso."
+    },
+    {
+      "titulo": "Vulnerabilidade",
+      "resumo": "Fragilidade que pode ser explorada por uma ameaça.",
+      "exemplo": "Senha fraca ou sistema sem atualização."
+    },
+    {
+      "titulo": "Risco",
+      "resumo": "Possibilidade de consequências negativas decorrentes de ameaças e vulnerabilidades, considerando probabilidade e impacto.",
+      "exemplo": "Risco de acesso indevido a uma base de clientes."
+    },
+    {
+      "titulo": "Incidente de segurança",
+      "resumo": "Evento adverso confirmado que compromete propriedades de segurança.",
+      "exemplo": "Exposição não autorizada de dados pessoais."
+    }
+  ],
+  "ameacas": [
+    {
+      "titulo": "Malware",
+      "icon": "alert",
+      "resumo": "Software malicioso que pode roubar, alterar ou bloquear dados.",
+      "exemplo": "Arquivos ficam bloqueados e aparece um pedido de resgate.",
+      "defesa": "Atualizações, proteção de endpoints, backup e restrição de privilégios.",
+      "arte": "files"
+    },
+    {
+      "titulo": "Phishing",
+      "icon": "lock",
+      "resumo": "Mensagens ou páginas falsas para obter dados ou induzir ações.",
+      "exemplo": "Um e-mail imita seu banco e pede que você confirme a senha.",
+      "defesa": "Verificar remetente e endereço, usar MFA e treinar a equipe.",
+      "arte": "mail"
+    },
+    {
+      "titulo": "Engenharia social",
+      "icon": "users",
+      "resumo": "Manipulação de pessoas para conseguir acesso ou informação.",
+      "exemplo": "Alguém se passa pelo suporte e pede um código de autenticação.",
+      "defesa": "Confirmar identidades por canais confiáveis e não compartilhar códigos.",
+      "arte": "chat"
+    },
+    {
+      "titulo": "Riscos internos",
+      "icon": "database",
+      "resumo": "Ações acidentais ou intencionais de pessoas com acesso legítimo.",
+      "exemplo": "Uma planilha de clientes é enviada ao destinatário errado.",
+      "defesa": "Privilégio mínimo, conscientização, revisão de acessos e registros.",
+      "arte": "share"
+    }
+  ],
+  "cid": [
+    {
+      "titulo": "Confidencialidade",
+      "curto": "A informação só deve ser acessada por quem tem autorização.",
+      "exemplo": "Somente o cliente e profissionais autorizados consultam dados da conta.",
+      "controles": "Controle de acesso, autenticação, criptografia.",
+      "falha": "Uma pessoa sem autorização consegue ler o extrato de outra."
+    },
+    {
+      "titulo": "Integridade",
+      "curto": "Os dados precisam permanecer corretos e protegidos contra alterações indevidas.",
+      "exemplo": "O valor de uma transferência não deve ser alterado durante o processamento.",
+      "controles": "Validação, trilhas de auditoria, controle de mudanças.",
+      "falha": "O valor errado é debitado após uma alteração indevida."
+    },
+    {
+      "titulo": "Disponibilidade",
+      "curto": "Serviços e informações devem estar acessíveis quando necessários.",
+      "exemplo": "O aplicativo bancário precisa permitir acesso aos serviços previstos.",
+      "controles": "Redundância, backups, monitoramento e recuperação.",
+      "falha": "Clientes ficam temporariamente sem acesso ao serviço de pagamentos."
+    }
+  ],
+  "psi": {
+    "definicao": "Uma Política de Segurança da Informação (PSI) define diretrizes, regras e responsabilidades para proteger as informações da organização.",
+    "componentes": [
+      {
+        "titulo": "Pessoas",
+        "texto": "Responsabilidades, treinamento, comportamento seguro e reporte de incidentes.",
+        "exemplo": "Uma funcionária reconhece uma mensagem de phishing e a comunica pelo canal interno."
+      },
+      {
+        "titulo": "Processos",
+        "texto": "Classificação da informação, procedimentos, resposta a incidentes e revisão periódica.",
+        "exemplo": "A empresa segue um procedimento com responsáveis definidos para registrar, conter e investigar incidentes."
+      },
+      {
+        "titulo": "Tecnologia",
+        "texto": "Gestão de identidade, restrições de acesso, criptografia, logs e medidas preventivas.",
+        "exemplo": "O sistema de cadastro exige autenticação multifator."
+      }
+    ]
+  },
+  "camadas": [
+    {
+      "titulo": "Física",
+      "subtitulo": "Proteção dos ambientes e equipamentos",
+      "descricao": "Controle de entrada, visitantes, acesso a salas e proteção de dispositivos.",
+      "exemplo": "Somente a equipe autorizada entra na sala de servidores, com a entrada registrada e o ambiente monitorado."
+    },
+    {
+      "titulo": "Lógica",
+      "subtitulo": "Proteção de contas, redes e aplicações",
+      "descricao": "MFA, criptografia, firewalls, atualizações, segmentação e monitoramento.",
+      "exemplo": "Mesmo se uma senha vazar, o segundo fator pode impedir o uso indevido da conta."
+    },
+    {
+      "titulo": "Administrativa",
+      "subtitulo": "Regras e governança",
+      "descricao": "PSI, treinamento, auditoria, classificação de dados e plano de resposta a incidentes.",
+      "exemplo": "A equipe ensaia o plano de resposta e usa auditorias e avaliações de risco para atualizar os controles."
+    }
+  ],
+  "normas": [
+    {
+      "nome": "ISO/IEC 27001",
+      "papel": "Estabelece requisitos para um Sistema de Gestão de Segurança da Informação (SGSI).",
+      "ref": "iso27001"
+    },
+    {
+      "nome": "ISO/IEC 27002",
+      "papel": "Oferece orientações para controles de segurança da informação.",
+      "ref": "iso27002"
+    }
+  ],
+  "lgpd": {
+    "intro": "A Lei nº 13.709/2018 protege a liberdade, a privacidade e o livre desenvolvimento da personalidade no tratamento de dados pessoais.",
+    "exemplos": [
+      {
+        "titulo": "Dado pessoal",
+        "texto": "Informação sobre uma pessoa natural identificada ou identificável. Exemplos incluem nome, CPF, telefone, e-mail e dados financeiros associados à pessoa."
+      },
+      {
+        "titulo": "Tratamento",
+        "texto": "Qualquer operação com dados pessoais, como coleta, consulta, armazenamento, utilização, compartilhamento ou eliminação."
+      }
+    ],
+    "principios": [
+      {
+        "titulo": "Finalidade",
+        "resumo": "Tratar dados para propósitos legítimos, específicos, explícitos e informados.",
+        "exemplo": "Explicar por que um cadastro solicita determinada informação.",
+        "pratica": "No formulário, o banco informa que usará o endereço para enviar o cartão."
+      },
+      {
+        "titulo": "Necessidade",
+        "resumo": "Limitar todo o tratamento ao mínimo necessário à finalidade.",
+        "exemplo": "Não solicitar dados irrelevantes para abrir uma conta.",
+        "pratica": "Para enviar o cartão, pede o endereço de entrega e dispensa perguntas sem relação com esse serviço."
+      },
+      {
+        "titulo": "Transparência",
+        "resumo": "Informar de forma clara como os dados são utilizados.",
+        "exemplo": "Disponibilizar aviso de privacidade compreensível.",
+        "pratica": "Antes do cadastro, o cliente encontra um aviso claro sobre uso, retenção e canais de contato."
+      },
+      {
+        "titulo": "Segurança",
+        "resumo": "Proteger os dados contra acessos e eventos indevidos.",
+        "exemplo": "Adotar controle de acesso e criptografia adequados.",
+        "pratica": "Somente equipes autorizadas consultam informações cadastrais, com registro de acessos."
+      },
+      {
+        "titulo": "Prevenção",
+        "resumo": "Atuar para evitar danos antes que aconteçam.",
+        "exemplo": "Realizar revisões de risco e orientar os profissionais.",
+        "pratica": "A equipe avalia periodicamente os riscos e corrige permissões excessivas antes de um incidente."
+      },
+      {
+        "titulo": "Responsabilização e prestação de contas",
+        "resumo": "Demonstrar adoção e eficácia das medidas de conformidade.",
+        "exemplo": "Manter registros de controles e evidências das ações adotadas.",
+        "pratica": "A empresa documenta as revisões de acesso e guarda evidências da eficácia dos controles.",
+        "rotulo": "Prestação de contas"
+      }
+    ],
+    "artigos": [
+      {
+        "titulo": "Art. 6º · Princípios",
+        "rotulo": "Art. 6º",
+        "arte": "document",
+        "descricao": "Orienta o uso dos dados pessoais. Defina a finalidade e limite a coleta ao necessário.",
+        "exemplo": "Um cadastro pede apenas os dados que precisa usar."
+      },
+      {
+        "titulo": "Art. 46 · Proteção",
+        "rotulo": "Art. 46",
+        "arte": "shield",
+        "descricao": "Exige medidas técnicas e administrativas para proteger dados pessoais.",
+        "exemplo": "Só a equipe autorizada consegue abrir o cadastro de clientes."
+      },
+      {
+        "titulo": "Art. 48 · Comunicação",
+        "rotulo": "Art. 48",
+        "arte": "bell",
+        "descricao": "Exige que o controlador comunique à ANPD e aos titulares incidentes que possam causar risco ou dano relevante.",
+        "exemplo": "A equipe avalia a exposição dos dados e comunica quando exigido."
+      }
+    ],
+    "ciclo": [
+      {
+        "titulo": "Coleta",
+        "descricao": "Definir a finalidade e coletar somente dados necessários.",
+        "exemplo": "O banco coleta dados de identificação necessários para abrir a conta."
+      },
+      {
+        "titulo": "Armazenamento",
+        "descricao": "Organizar, classificar e restringir acessos.",
+        "exemplo": "O cadastro fica em ambiente com acesso restrito às equipes autorizadas."
+      },
+      {
+        "titulo": "Utilização",
+        "descricao": "Usar os dados conforme as finalidades e bases legais aplicáveis.",
+        "exemplo": "A equipe consulta o cadastro para verificar a identidade do cliente nos serviços contratados."
+      },
+      {
+        "titulo": "Proteção e monitoramento",
+        "descricao": "Monitorar, prevenir incidentes e revisar controles.",
+        "exemplo": "O banco monitora consultas fora do padrão e revisa as permissões de acesso."
+      },
+      {
+        "titulo": "Resposta e descarte",
+        "descricao": "Investigar incidentes e comunicar quando exigido; manter rotinas de retenção e descarte.",
+        "exemplo": "A equipe verifica incidentes e comunica quando exigido. Dados sem necessidade de retenção são eliminados conforme as regras aplicáveis."
+      }
+    ],
+    "incidencia": "O controlador comunica à ANPD e aos titulares se o incidente puder causar risco ou dano relevante. O prazo geral é de 3 dias úteis após saber que houve impacto sobre dados pessoais, salvo prazo legal específico.",
+    "notaLegal": "Todo tratamento exige uma base legal aplicável. Consentimento é uma das hipóteses previstas na LGPD.",
+    "notaCiclo": "Etapas ilustrativas. A proteção acompanha todo o tratamento."
+  },
+  "caso": {
+    "descricao": "Em 2018, o Ministério Público do Distrito Federal e Territórios investigou a exposição de dados associados ao Banco Inter. A ação civil pública e o acordo judicial são documentados em publicações oficiais.",
+    "confirmados": [
+      "O MPDFT informou ainda o comprometimento de 4.840 dados de clientes de outros bancos que transacionaram com usuários do Inter.",
+      "Houve exposição de certificados digitais já revogados e de uma chave privada do banco.",
+      "As contagens descrevem registros documentados. O total de pessoas afetadas permanece indeterminado nesse recorte."
+    ],
+    "timeline": [
+      {
+        "data": "8 de maio de 2018",
+        "titulo": "Instauração do inquérito civil público",
+        "descricao": "O MPDFT abriu investigação sobre o suposto vazamento. Notícia publicada em 9 de maio.",
+        "ref": "mp_maio",
+        "iso": "2018-05-08"
+      },
+      {
+        "data": "30 de julho de 2018",
+        "titulo": "Ajuizamento da ação civil pública",
+        "descricao": "O MPDFT pediu R$ 10 milhões por danos morais coletivos. Notícia publicada em 31 de julho.",
+        "ref": "mp_julho",
+        "iso": "2018-07-30"
+      },
+      {
+        "data": "18 de dezembro de 2018",
+        "titulo": "Homologação judicial do acordo",
+        "descricao": "A Justiça homologou acordo de R$ 1,5 milhão. Notícia publicada em 19 de dezembro.",
+        "ref": "mp_dezembro",
+        "iso": "2018-12-18"
+      }
+    ],
+    "valores": [
+      {
+        "titulo": "Pedido na ação civil pública",
+        "valor": 10000000,
+        "descricao": "Indenização por danos morais coletivos solicitada pelo MPDFT na ação de julho de 2018.",
+        "ref": "mp_julho"
+      },
+      {
+        "titulo": "Acordo judicial homologado",
+        "valor": 1500000,
+        "descricao": "Valor do acordo homologado pela Justiça em 18 de dezembro de 2018.",
+        "ref": "mp_dezembro"
+      }
+    ],
+    "cuidado": "O acordo reparou danos morais coletivos por via judicial. O caso é anterior à vigência das sanções da LGPD.",
+    "limite": "Causa técnica específica não demonstrada nas fontes consultadas.",
+    "interpretacao": "A exposição comprometeu a confidencialidade. Na ação civil, o MPDFT atribuiu ao banco cuidados insuficientes na proteção dos dados.",
+    "registros": [
+      {
+        "titulo": "Registros cadastrais de correntistas comprometidos",
+        "valor": 19961,
+        "descricao": "Contagem de registros cadastrais comprometidos divulgada pelo MPDFT.",
+        "ref": "mp_julho"
+      },
+      {
+        "titulo": "Registros do conjunto com dados bancários",
+        "valor": 13207,
+        "descricao": "Registros que também continham dados bancários, dentro do conjunto de 19.961.",
+        "ref": "mp_julho"
+      }
+    ],
+    "reparticao": [
+      {
+        "titulo": "Instituições públicas de combate a crimes cibernéticos",
+        "valor": 1000000,
+        "descricao": "Parcela do acordo destinada a instituições públicas de combate a crimes cibernéticos.",
+        "ref": "mp_dezembro"
+      },
+      {
+        "titulo": "Instituições de caridade",
+        "valor": 500000,
+        "descricao": "Parcela do acordo destinada a instituições de caridade.",
+        "ref": "mp_dezembro"
+      }
+    ]
+  },
+  "impactos": [
+    {
+      "titulo": "Clientes",
+      "descricao": "Exposição de dados pessoais, risco de golpes e fraudes e preocupação com a privacidade."
+    },
+    {
+      "titulo": "Empresa",
+      "descricao": "Custos de investigação e remediação, possíveis responsabilidades jurídicas, interrupções e perda de confiança."
+    },
+    {
+      "titulo": "Governança",
+      "descricao": "Revisão de controles, políticas, processos e estratégias de proteção para reduzir riscos e responder a incidentes."
+    }
+  ],
+  "boasPraticas": [
+    {
+      "grupo": "Pessoas",
+      "icon": "users",
+      "itens": [
+        "Reconhecer mensagens suspeitas.",
+        "Não compartilhar senhas ou códigos.",
+        "Participar de treinamentos.",
+        "Comunicar situações anormais."
+      ]
+    },
+    {
+      "grupo": "Tecnologia",
+      "icon": "lock",
+      "itens": [
+        "Utilizar autenticação multifator.",
+        "Manter sistemas atualizados.",
+        "Implementar controles de acesso.",
+        "Utilizar criptografia quando apropriado.",
+        "Manter backups testados e monitoramento."
+      ]
+    },
+    {
+      "grupo": "Gestão",
+      "icon": "flow",
+      "itens": [
+        "Definir uma PSI.",
+        "Classificar informações.",
+        "Revisar permissões de acesso.",
+        "Avaliar riscos periodicamente.",
+        "Manter planos de resposta a incidentes."
+      ]
+    }
+  ],
+  "glossario": [
+    {
+      "termo": "Ameaça",
+      "sigla": "",
+      "categoria": "Segurança",
+      "definicao": "Evento ou agente com potencial para produzir um dano.",
+      "exemplo": "Tentativa de invasão."
+    },
+    {
+      "termo": "ANPD",
+      "sigla": "Agência Nacional de Proteção de Dados",
+      "categoria": "Privacidade",
+      "definicao": "Autoridade brasileira responsável por zelar pela proteção de dados pessoais e pela aplicação da LGPD.",
+      "exemplo": "Receber comunicações de incidentes sujeitos à obrigação legal."
+    },
+    {
+      "termo": "Autenticação",
+      "categoria": "Tecnologia",
+      "definicao": "Verificação da identidade de uma pessoa ou sistema.",
+      "exemplo": "Entrar na conta com senha e segundo fator."
+    },
+    {
+      "termo": "Autenticação multifator",
+      "sigla": "MFA",
+      "categoria": "Tecnologia",
+      "definicao": "Uso de mais de um fator para verificar a identidade.",
+      "exemplo": "Senha e aplicativo autenticador."
+    },
+    {
+      "termo": "Backup",
+      "sigla": "",
+      "categoria": "Tecnologia",
+      "definicao": "Cópia para permitir recuperação de informações.",
+      "exemplo": "Restaurar arquivos após perda."
+    },
+    {
+      "termo": "Confidencialidade",
+      "sigla": "C",
+      "categoria": "Segurança",
+      "definicao": "Propriedade que restringe o acesso às pessoas e aos sistemas autorizados.",
+      "exemplo": "Restringir consultas a dados de clientes."
+    },
+    {
+      "termo": "Conhecimento",
+      "categoria": "Fundamentos",
+      "definicao": "Compreensão obtida ao interpretar informações.",
+      "exemplo": "Usar extratos para reconhecer um padrão de despesas."
+    },
+    {
+      "termo": "Controlador",
+      "sigla": "",
+      "categoria": "Privacidade",
+      "definicao": "Agente a quem competem as decisões referentes ao tratamento de dados pessoais.",
+      "exemplo": "Empresa que define a finalidade da coleta."
+    },
+    {
+      "termo": "Criptografia",
+      "sigla": "",
+      "categoria": "Tecnologia",
+      "definicao": "Técnicas que transformam dados para protegê-los de leitura indevida.",
+      "exemplo": "Cifrar dados em trânsito."
+    },
+    {
+      "termo": "Dado",
+      "sigla": "",
+      "categoria": "Fundamentos",
+      "definicao": "Registro ou fato bruto sem contexto suficiente para certa decisão.",
+      "exemplo": "Um número isolado."
+    },
+    {
+      "termo": "Dados pessoais",
+      "sigla": "",
+      "categoria": "Privacidade",
+      "definicao": "Informação relacionada à pessoa natural identificada ou identificável.",
+      "exemplo": "CPF ou e-mail associado a uma pessoa."
+    },
+    {
+      "termo": "Dados pessoais sensíveis",
+      "categoria": "Privacidade",
+      "definicao": "Dados sobre origem racial ou étnica, convicção religiosa, opinião política, filiação sindical ou a organização de caráter religioso, filosófico ou político, saúde, vida sexual, ou dado genético ou biométrico vinculado a pessoa natural.",
+      "exemplo": "Dados de saúde no prontuário de uma pessoa."
+    },
+    {
+      "termo": "Defesa em profundidade",
+      "sigla": "",
+      "categoria": "Governança",
+      "definicao": "Emprego de várias medidas de proteção complementares.",
+      "exemplo": "Controle físico, MFA e treinamento."
+    },
+    {
+      "termo": "Disponibilidade",
+      "sigla": "D",
+      "categoria": "Segurança",
+      "definicao": "Propriedade de manter a informação acessível quando necessária.",
+      "exemplo": "Recuperar um serviço após falha."
+    },
+    {
+      "termo": "Engenharia social",
+      "sigla": "",
+      "categoria": "Ameaças",
+      "definicao": "Técnica de manipulação de pessoas para obter informações ou acesso.",
+      "exemplo": "Falso funcionário de suporte."
+    },
+    {
+      "termo": "Firewall",
+      "categoria": "Tecnologia",
+      "definicao": "Controle que permite ou bloqueia tráfego de rede conforme regras.",
+      "exemplo": "Restringir conexões recebidas por um servidor."
+    },
+    {
+      "termo": "Incidente de segurança",
+      "sigla": "",
+      "categoria": "Segurança",
+      "definicao": "Evento adverso confirmado que compromete propriedades de segurança.",
+      "exemplo": "Acesso não autorizado a registros."
+    },
+    {
+      "termo": "Informação",
+      "sigla": "",
+      "categoria": "Fundamentos",
+      "definicao": "Dado organizado e contextualizado para produzir significado.",
+      "exemplo": "Saldo com data e identificação da conta."
+    },
+    {
+      "termo": "Integridade",
+      "sigla": "I",
+      "categoria": "Segurança",
+      "definicao": "Propriedade de manter dados corretos e sem alterações indevidas.",
+      "exemplo": "Verificar modificações em transações."
+    },
+    {
+      "termo": "ISO/IEC 27001",
+      "categoria": "Governança",
+      "definicao": "Norma com requisitos para um SGSI.",
+      "exemplo": "Definir e avaliar um sistema de gestão de segurança."
+    },
+    {
+      "termo": "ISO/IEC 27002",
+      "categoria": "Governança",
+      "definicao": "Norma com orientações sobre controles de segurança da informação.",
+      "exemplo": "Consultar orientações ao revisar os controles de acesso."
+    },
+    {
+      "termo": "LGPD",
+      "sigla": "Lei nº 13.709/2018",
+      "categoria": "Privacidade",
+      "definicao": "Lei Geral de Proteção de Dados Pessoais.",
+      "exemplo": "Regras para uso de dados em cadastros."
+    },
+    {
+      "termo": "Malware",
+      "sigla": "",
+      "categoria": "Ameaças",
+      "definicao": "Programa criado para executar ações maliciosas.",
+      "exemplo": "Ransomware que bloqueia arquivos."
+    },
+    {
+      "termo": "Operador",
+      "categoria": "Privacidade",
+      "definicao": "Agente que trata dados pessoais em nome do controlador.",
+      "exemplo": "Prestadora que processa cadastros sob instruções da empresa contratante."
+    },
+    {
+      "termo": "Phishing",
+      "sigla": "",
+      "categoria": "Ameaças",
+      "definicao": "Fraude que usa mensagens ou páginas falsas para enganar pessoas.",
+      "exemplo": "Página bancária falsificada."
+    },
+    {
+      "termo": "Política de Segurança da Informação",
+      "sigla": "PSI",
+      "categoria": "Governança",
+      "definicao": "Diretrizes e responsabilidades organizacionais para proteger informações.",
+      "exemplo": "Regras de acesso e reporte de incidentes."
+    },
+    {
+      "termo": "Ransomware",
+      "categoria": "Ameaças",
+      "definicao": "Malware que bloqueia acesso a dados ou sistemas e exige resgate.",
+      "exemplo": "Arquivos ficam indisponíveis e surge uma exigência de pagamento."
+    },
+    {
+      "termo": "Risco",
+      "sigla": "",
+      "categoria": "Segurança",
+      "definicao": "Possibilidade de consequências negativas associadas a cenários incertos.",
+      "exemplo": "Exposição de cadastros."
+    },
+    {
+      "termo": "SGSI",
+      "sigla": "Sistema de Gestão de Segurança da Informação",
+      "categoria": "Governança",
+      "definicao": "Estrutura de gestão para estabelecer, manter e melhorar a segurança da informação.",
+      "exemplo": "Programa organizacional orientado pela ISO/IEC 27001."
+    },
+    {
+      "termo": "Sistema de Informação",
+      "sigla": "SI",
+      "categoria": "Fundamentos",
+      "definicao": "Conjunto de recursos e processos que coleta, trata e distribui informações.",
+      "exemplo": "Sistema que processa operações bancárias."
+    },
+    {
+      "termo": "Tratamento de dados",
+      "sigla": "",
+      "categoria": "Privacidade",
+      "definicao": "Operação envolvendo dados pessoais, como coletar, consultar, compartilhar ou excluir.",
+      "exemplo": "Atualizar o cadastro de um cliente."
+    },
+    {
+      "termo": "Vulnerabilidade",
+      "sigla": "",
+      "categoria": "Segurança",
+      "definicao": "Fraqueza explorável em um sistema ou processo.",
+      "exemplo": "Aplicação desatualizada."
+    }
+  ],
+  "flashcards": [
+    {
+      "frente": "Dado, informação e conhecimento",
+      "verso": "250 é um dado bruto. Saber que é o saldo da conta em uma data dá contexto e gera informação. Reconhecer um padrão ao comparar saldos gera conhecimento."
+    },
+    {
+      "frente": "Ameaça e vulnerabilidade",
+      "verso": "Uma ameaça tem potencial de causar dano, como um golpista. A vulnerabilidade é uma fraqueza, como uma senha previsível."
+    },
+    {
+      "frente": "Risco e incidente",
+      "verso": "Risco é a possibilidade de um evento e de suas consequências. Incidente é um evento adverso que ocorreu e comprometeu a segurança."
+    },
+    {
+      "frente": "Tríade CID",
+      "verso": "Confidencialidade protege o acesso. Integridade preserva a correção. Disponibilidade mantém a informação acessível quando necessária."
+    },
+    {
+      "frente": "Política de Segurança da Informação",
+      "verso": "A PSI define diretrizes e responsabilidades. Por exemplo, orienta quem tem acesso a um cadastro e como comunicar um incidente."
+    },
+    {
+      "frente": "Defesa em profundidade",
+      "verso": "Combina proteções físicas, lógicas e administrativas. Se uma senha for comprometida, a MFA ainda pode proteger a conta."
+    },
+    {
+      "frente": "Princípios da LGPD",
+      "verso": "Os seis vistos aqui são finalidade, necessidade, transparência, segurança, prevenção e responsabilização e prestação de contas. O art. 6º reúne dez princípios."
+    },
+    {
+      "frente": "Segurança da informação e proteção de dados",
+      "verso": "Segurança preserva a confidencialidade, integridade e disponibilidade de informações em geral. A proteção de dados pessoais também exige finalidade, base legal e respeito aos direitos das pessoas."
+    }
+  ],
+  "referencias": [
+    {
+      "id": "hintz",
+      "autor": "HINTZBERGEN, Jule et al.",
+      "titulo": "Fundamentos de segurança da informação: com base na ISO 27001 e na ISO 27002.",
+      "ano": "2018",
+      "detalhe": "Rio de Janeiro: Brasport. Veja os capítulos 3 (conceitos e riscos), 5 e 6 (políticas e organização), e 9 a 12 (acesso, criptografia, segurança física e operacional).",
+      "url": "https://www.editorabrasport.com.br/livros-da-brasport/fundamentos-de-seguranca-da-informacao-com-base-na-iso-27001-e-na-iso-27002?page=10",
+      "status": "Livro fornecido pelo professor"
+    },
+    {
+      "id": "baltzan",
+      "autor": "BALTZAN, Paige; PHILLIPS, Amy.",
+      "titulo": "Sistemas de informação.",
+      "ano": "2012",
+      "detalhe": "Porto Alegre: AMGH. Cap. 4, Ética e segurança da informação. O cap. 8 desta edição trata de operações e cadeia de suprimentos.",
+      "url": "https://loja.grupoa.com.br/sistemas-de-informacao-p991456",
+      "status": "Livro disponibilizado na disciplina"
+    },
+    {
+      "id": "aula01",
+      "autor": "MELO, Gleiser Rodrigues de.",
+      "titulo": "Aula 01: Fundamentos de Sistemas de Informação.",
+      "ano": "2026",
+      "detalhe": "Material da disciplina. Dados, informação, conhecimento, sistemas e atividades de SI.",
+      "url": "",
+      "status": "Material didático fornecido"
+    },
+    {
+      "id": "aula03",
+      "autor": "INSTITUTO FEDERAL DE SERGIPE.",
+      "titulo": "Aula 03: Sistemas de informação baseados em computador.",
+      "ano": "2026",
+      "detalhe": "Material da disciplina. Recursos humanos, hardware, software, dados e redes.",
+      "url": "",
+      "status": "Material didático fornecido"
+    },
+    {
+      "id": "lei",
+      "autor": "BRASIL.",
+      "titulo": "Lei nº 13.709, de 14 de agosto de 2018: Lei Geral de Proteção de Dados Pessoais.",
+      "ano": "2018",
+      "detalhe": "Especialmente artigos 5º, 6º, 46 e 48. Consultar texto vigente e alterações.",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+      "status": "Legislação federal"
+    },
+    {
+      "id": "anpd",
+      "autor": "AGÊNCIA NACIONAL DE PROTEÇÃO DE DADOS.",
+      "titulo": "Comunicação de Incidente de Segurança.",
+      "ano": "2022, atualizada em 2026",
+      "detalhe": "Procedimento de comunicação e perguntas frequentes sobre incidentes.",
+      "url": "https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis",
+      "status": "Orientações oficiais"
+    },
+    {
+      "id": "mp_maio",
+      "autor": "MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS.",
+      "titulo": "MPDFT investiga suposto vazamento de dados de clientes do Banco Inter.",
+      "ano": "2018",
+      "detalhe": "Notícia publicada em 9 maio 2018.",
+      "url": "https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10035-mpdft-investiga-suposto-vazamento-de-dados-de-clientes-do-banco-inter",
+      "status": "Fonte primária do caso"
+    },
+    {
+      "id": "mp_julho",
+      "autor": "MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS.",
+      "titulo": "MPDFT ajuíza ação contra o Banco Inter por vazamento de dados pessoais.",
+      "ano": "2018",
+      "detalhe": "Notícia publicada em 31 jul. 2018.",
+      "url": "https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10211-mpdft-ajuiza-acao-contra-o-banco-inter-por-vazamento-de-dados-pessoais",
+      "status": "Fonte primária do caso"
+    },
+    {
+      "id": "mp_dezembro",
+      "autor": "MINISTÉRIO PÚBLICO DO DISTRITO FEDERAL E TERRITÓRIOS.",
+      "titulo": "Banco Inter: acordo destinará R$ 1,5 milhão para caridade e combate a crimes cibernéticos.",
+      "ano": "2018",
+      "detalhe": "Notícia publicada em 19 dez. 2018, sobre homologação do acordo em 18 dez.",
+      "url": "https://www.mpdft.mp.br/portal/index.php/comunicacao-menu/sala-de-imprensa/noticias/noticias-2018/10524-2018-12-19-10-27-31",
+      "status": "Fonte primária do caso"
+    },
+    {
+      "id": "ibm",
+      "autor": "IBM.",
+      "titulo": "O que é a segurança da informação?",
+      "ano": "s.d.",
+      "detalhe": "Visão geral da proteção de informações corporativas.",
+      "url": "https://www.ibm.com/br-pt/think/topics/information-security",
+      "status": "Leitura complementar"
+    },
+    {
+      "id": "microsoft",
+      "autor": "MICROSOFT.",
+      "titulo": "O que é a proteção de dados?",
+      "ano": "s.d.",
+      "detalhe": "Visão geral de estratégias de proteção, descoberta e controle.",
+      "url": "https://www.microsoft.com/pt-br/security/business/security-101/what-is-data-protection#data-protection-defined",
+      "status": "Leitura complementar"
+    },
+    {
+      "id": "regimento",
+      "autor": "MELO, Gleiser Rodrigues de.",
+      "titulo": "Regimento e roteiro do projeto de seminários: Unidade 2.",
+      "ano": "2026",
+      "detalhe": "Revisão de 26 out. 2026. Requisitos do material de apoio e das apresentações.",
+      "url": "",
+      "status": "Documento da disciplina"
+    },
+    {
+      "id": "fichamento",
+      "autor": "GRUPO DO TEMA 6.",
+      "titulo": "Fichamento — Segurança da Informação e Proteção de Dados.",
+      "ano": "s.d.",
+      "detalhe": "Síntese de Hintzbergen et al., LGPD, IBM, Microsoft e ação civil pública do MPDFT.",
+      "status": "Material do seminário"
+    },
+    {
+      "id": "roteiro",
+      "autor": "GRUPO DO TEMA 6.",
+      "titulo": "Roteiro colaborativo — Tema 6.",
+      "ano": "s.d.",
+      "detalhe": "Planejamento dos cinco blocos e das intervenções da plateia.",
+      "status": "Material do seminário"
+    },
+    {
+      "id": "iso27001",
+      "autor": "ISO; IEC.",
+      "titulo": "ISO/IEC 27001:2022 — Information security management systems — Requirements.",
+      "ano": "2022",
+      "detalhe": "Resumo oficial dos requisitos do SGSI.",
+      "url": "https://www.iso.org/standard/27001",
+      "status": "Norma técnica"
+    },
+    {
+      "id": "iso27002",
+      "autor": "ISO; IEC.",
+      "titulo": "ISO/IEC 27002:2022 — Information security controls.",
+      "ano": "2022",
+      "detalhe": "Resumo oficial das orientações sobre controles de segurança.",
+      "url": "https://www.iso.org/standard/75652.html",
+      "status": "Norma técnica"
+    },
+    {
+      "id": "regol",
+      "autor": "CONSELHO DIRETOR DA ANPD.",
+      "titulo": "Resolução CD/ANPD nº 15, de 24 de abril de 2024.",
+      "ano": "2024",
+      "detalhe": "Regulamento de Comunicação de Incidente de Segurança. Veja os critérios e os arts. 6º e 9º para os prazos.",
+      "url": "https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html",
+      "status": "Regulamentação federal"
+    },
+    {
+      "id": "anpd_inst",
+      "autor": "AGÊNCIA NACIONAL DE PROTEÇÃO DE DADOS.",
+      "titulo": "Institucional.",
+      "ano": "s.d.",
+      "detalhe": "Nome atual, missão e competências da agência reguladora.",
+      "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional",
+      "status": "Orientações oficiais"
+    }
+  ],
+  "blocos": [
+    {
+      "id": "fundamentos",
+      "titulo": "Fundamentos e Ameaças",
+      "curto": "Fundamentos e ameaças",
+      "pessoa": "Antony",
+      "icon": "database",
+      "resumo": "Proteger a informação mantém as decisões confiáveis e ajuda a evitar perdas, interrupções e danos à reputação."
+    },
+    {
+      "id": "defesa",
+      "titulo": "Segurança e Defesa",
+      "curto": "Segurança e defesa",
+      "pessoa": "Letícia",
+      "icon": "shield",
+      "resumo": "A tríade CID define o que proteger. A política de segurança e os controles em camadas orientam como proteger."
+    },
+    {
+      "id": "lgpd",
+      "titulo": "Proteção de Dados e LGPD",
+      "curto": "Proteção de dados e LGPD",
+      "pessoa": "Mikael",
+      "icon": "lock",
+      "resumo": "A LGPD protege os direitos das pessoas quando seus dados são tratados."
+    },
+    {
+      "id": "caso",
+      "titulo": "Caso Banco Inter",
+      "curto": "Caso Banco Inter",
+      "pessoa": "Andrey",
+      "icon": "case",
+      "resumo": "Em 2018, o MPDFT documentou a exposição de dados e a Justiça homologou um acordo."
+    },
+    {
+      "id": "boas-praticas",
+      "titulo": "Boas Práticas e Conclusão",
+      "curto": "Boas práticas e conclusão",
+      "pessoa": "Isabelly",
+      "icon": "check",
+      "resumo": "Pessoas, tecnologia e gestão dividem a responsabilidade pela proteção dos dados."
+    }
+  ],
+  "cenarios": [
+    {
+      "titulo": "Phishing",
+      "descricao": "Exemplo fictício. O uso indevido da conta confirma o incidente.",
+      "etapas": [
+        [
+          "Ameaça",
+          "Uma pessoa recebe uma mensagem falsa que imita o banco."
+        ],
+        [
+          "Exploração da fraqueza",
+          "A pessoa confia na mensagem e fornece suas credenciais."
+        ],
+        [
+          "Incidente confirmado",
+          "A conta é acessada e usada sem autorização."
+        ],
+        [
+          "Impactos possíveis",
+          "Exposição de informações pessoais e tentativas de fraude."
+        ]
+      ]
+    },
+    {
+      "titulo": "Software desatualizado",
+      "descricao": "Exemplo fictício. A falha indica um risco. O acesso indevido confirma o incidente.",
+      "etapas": [
+        [
+          "Ameaça",
+          "Uma pessoa mal-intencionada tenta obter acesso a informações da empresa."
+        ],
+        [
+          "Exploração da fraqueza",
+          "A tentativa se aproveita de uma falha conhecida que permanece em uma versão desatualizada da aplicação."
+        ],
+        [
+          "Incidente confirmado",
+          "Registros da empresa são acessados sem autorização."
+        ],
+        [
+          "Impactos possíveis",
+          "Exposição de dados pessoais e custos de investigação e contenção."
+        ]
+      ]
+    }
+  ],
+  "conclusao": {
+    "mensagens": [
+      {
+        "titulo": "Informação tem valor",
+        "texto": "Como vimos na Unidade 1, os sistemas transformam dados em informações que orientam decisões."
+      },
+      {
+        "titulo": "Segurança sustenta a confiança",
+        "texto": "Preservar confidencialidade, integridade e disponibilidade ajuda a manter operações e relações confiáveis."
+      },
+      {
+        "titulo": "Responsabilidade é compartilhada",
+        "texto": "Pessoas, tecnologia e gestão precisam atuar juntas."
+      }
+    ],
+    "pergunta": "Um sistema de informação pode ser considerado eficiente se não consegue proteger adequadamente as informações que utiliza?"
+  },
+  "praticasResumo": [
+    {
+      "titulo": "Pessoas",
+      "texto": "Desconfie de mensagens suspeitas e preserve senhas e códigos.",
+      "arte": "people",
+      "exemplo": "Abra o aplicativo oficial do banco para conferir uma mensagem suspeita."
+    },
+    {
+      "titulo": "Tecnologia",
+      "texto": "Use autenticação multifator, atualizações e backups testados.",
+      "arte": "devices",
+      "exemplo": "Um segundo fator ajuda a proteger a conta quando a senha é exposta."
+    },
+    {
+      "titulo": "Gestão",
+      "texto": "Defina regras de acesso e prepare a resposta a incidentes.",
+      "arte": "plan",
+      "exemplo": "Defina quem recebe e investiga uma suspeita de vazamento."
+    }
+  ]
+};
+
+const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+  '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+}[char]));
+const htmlList = (items, render) => items.map(render).join('\n');
+const icon = name => `<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-${name}"></use></svg>`;
+const art = name => `<svg class="illustration" viewBox="0 0 112 72" aria-hidden="true" focusable="false"><use href="#a-${name}"></use></svg>`;
+const numberFormat = new Intl.NumberFormat('pt-BR');
+const currencyFormat = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+
+function externalLink(url, label) {
+  return `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)} ${icon('external')}<span class="sr-only"> (abre em nova aba)</span></a>`;
+}
+
+const sourceNames = {
+  hintz:'Hintzbergen et al. (2018)', baltzan:'Baltzan e Phillips (2012), cap. 4',
+  aula01:'Aula 01 do IFS', aula03:'Aula 03 do IFS',
+  lei:'LGPD no Planalto', anpd:'Orientações da ANPD',
+  mp_maio:'MPDFT · 9 mai. 2018', mp_julho:'MPDFT · 31 jul. 2018', mp_dezembro:'MPDFT · 19 dez. 2018',
+  ibm:'IBM', microsoft:'Microsoft', iso27001:'ISO/IEC 27001', iso27002:'ISO/IEC 27002', regol:'Resolução CD/ANPD nº 15/2024', anpd_inst:'Institucional da ANPD'
+};
+function sources(...ids) {
+  const links = ids.map(id => {
+    const ref = siteData.referencias.find(item => item.id === id);
+    return ref.url
+      ? externalLink(ref.url, sourceNames[id])
+      : `<a href="#ref-${id}">${escapeHTML(sourceNames[id])}</a>`;
+  });
+  const label = ids.length === 1 ? 'Fonte' : 'Fontes';
+  return `<p class="source"><strong>${label}</strong> · ${links.join(' · ')}</p>`;
+}
+
+const diagramData = {
+  transformacao: {title:'Transformação dos dados', lead:'Siga o exemplo do saldo bancário', kind:'flow', items:siteData.fluxoUnidade1, refs:['aula01','aula03'],
+    detail:d => description(d.descricao, [['Exemplo',d.exemplo]])},
+  risco: {title:'Como um risco se concretiza', lead:'Compare dois cenários fictícios', items:siteData.cenarios, refs:['hintz','ibm'],
+    detail:d => description(d.descricao) + `<ol class="scenario-steps">${htmlList(d.etapas, ([label,text])=>`<li><strong>${escapeHTML(label)}</strong>${escapeHTML(text)}</li>`)}</ol>`},
+  ameacas: {title:'Mapa das ameaças', lead:'Escolha uma situação para ver como se proteger', kind:'illustrated', items:siteData.ameacas, refs:['hintz','ibm'],
+    detail:d => description(d.resumo, [['Exemplo',d.exemplo],['Prevenção',d.defesa]])},
+  cid: {title:'Tríade CID', lead:'Toque em um princípio para ver o que ele protege', kind:'triad', items:siteData.cid, refs:['hintz','baltzan'],
+    detail:d => description(d.curto, [['Exemplo bancário',d.exemplo],['Se falhar',d.falha],['Como proteger',d.controles]])},
+  psi: {title:'Pessoas, processos e tecnologia', lead:siteData.psi.definicao, kind:'hub', items:siteData.psi.componentes, refs:['hintz'],
+    detail:d => description(d.texto, [['Na prática',d.exemplo]])},
+  camadas: {title:'Defesa em camadas', lead:'Se uma barreira falhar, as outras ainda ajudam a reduzir o risco', kind:'layers', items:siteData.camadas, refs:['hintz','baltzan'],
+    detail:d => description(d.subtitulo, [['Controles',d.descricao],['Na prática',d.exemplo]])},
+  principios: {title:'Seis princípios da LGPD', lead:'Seis dos dez princípios do art. 6º', kind:'cols3', items:siteData.lgpd.principios, refs:['lei'],
+    detail:d => description(d.resumo, [['Exemplo empresarial',d.exemplo],['Aplicação em um banco',d.pratica]])},
+  obrigacoes: {title:'Da LGPD à prática', lead:'Veja o que cada artigo pede da empresa', kind:'illustrated', items:siteData.lgpd.artigos, refs:['lei','anpd'],
+    detail:d => description(d.descricao, [['Na prática',d.exemplo]])},
+  ciclo: {title:'Ciclo de tratamento dos dados', lead:'Do cadastro ao descarte', kind:'flow', items:siteData.lgpd.ciclo, refs:['lei','anpd'], note:siteData.lgpd.notaCiclo,
+    detail:d => description(d.descricao, [['No cadastro bancário',d.exemplo]])},
+  registros: {title:'Dados documentados no incidente', lead:'A barra verde representa parte do total cadastral', kind:'subset', illustration:'records', items:siteData.caso.registros, refs:['mp_julho'], format:d=>`${numberFormat.format(d.valor)} registros`,
+    detail:d => description(d.descricao)},
+  timeline: {title:'Linha do tempo', lead:'Da investigação ao acordo', kind:'timeline', items:siteData.caso.timeline,
+    detail:d => `<p><time datetime="${d.iso}">${escapeHTML(d.data)}</time></p>` + description(d.descricao)},
+  valores: {title:'Pedido judicial e acordo', lead:'Dois atos jurídicos em momentos diferentes', kind:'bars', items:siteData.caso.valores, refs:['mp_julho','mp_dezembro'], format:d=>currencyFormat.format(d.valor),
+    detail:d => description(d.descricao)},
+  reparticao: {title:'Destino dos recursos do acordo', lead:'As duas parcelas somam R$ 1,5 milhão', kind:'stacked', items:siteData.caso.reparticao, refs:['mp_dezembro'], format:d=>currencyFormat.format(d.valor),
+    detail:d => description(d.descricao)},
+  acoes: {title:'Onde aplicar as boas práticas', lead:'Explore as ações de cada área', kind:'illustrated', items:siteData.praticasResumo, refs:['hintz','microsoft'],
+    detail:d => description(d.texto, [['Na prática',d.exemplo]])},
+  impactos: {title:'Mapa de impactos', lead:'Consequências possíveis em qualquer vazamento de dados', kind:'cols3', items:siteData.impactos, refs:['ibm','microsoft'],
+    detail:d => description(d.descricao)}
+};
+
+function description(text, terms = []) {
+  const list = htmlList(terms, ([term, value]) => `<div><dt>${escapeHTML(term)}</dt><dd>${escapeHTML(value)}</dd></div>`);
+  return `<p>${escapeHTML(text)}</p>${terms.length ? `<dl>${list}</dl>` : ''}`;
+}
+
+function panelContents(chart, item) {
+  const title = chart.format ? `${item.titulo} · ${chart.format(item)}` : item.titulo;
+  return `<h4>${escapeHTML(title)}</h4>${chart.detail(item)}${item.ref ? sources(item.ref) : ''}`;
+}
+
+function triadControls(chart, attributes) {
+  const shapes = [
+    ['M160 14 220 111 160 143 100 111Z',160,108],
+    ['M100 111 160 143 160 209 38 209Z',104,189],
+    ['M220 111 282 209 160 209 160 143Z',215,189]
+  ];
+  return `<svg class="triad" viewBox="0 0 320 220" role="group" aria-label="Três áreas da tríade CID">
+    ${htmlList(chart.items, (item,i) => {
+      const [path,x,y] = shapes[i];
+      return `<g class="zone" role="button" tabindex="0" ${attributes(i)} aria-label="${escapeHTML(item.titulo)}">
+        <path d="${path}"/><text x="${x}" y="${y}" text-anchor="middle" aria-hidden="true">${escapeHTML(item.titulo)}</text>
+      </g>`;
+    })}
+    <circle cx="160" cy="140" r="19" fill="var(--surface)" stroke="var(--control)" pointer-events="none" aria-hidden="true"/>
+    <text class="cid-label" x="160" y="145" text-anchor="middle" aria-hidden="true">CID</text>
+  </svg>`;
+}
+
+function graphControls(id, chart) {
+  const attributes = i => `data-item="${i}" aria-pressed="${i === 0}" aria-controls="panel-${id}"`;
+  const button = (item,i) => `<button type="button" ${attributes(i)}${chart.kind === 'flow' ? ` data-step="${i+1}"` : ''}>${escapeHTML(item.rotulo ?? item.titulo)}</button>`;
+  const {kind, items} = chart;
+  if (kind === 'triad') return triadControls(chart, attributes);
+  if (kind === 'illustrated') {
+    const options = htmlList(items, (item,i) => `<button type="button" ${attributes(i)}>
+      ${art(item.arte)}<span>${escapeHTML(item.rotulo ?? item.titulo)}</span>
+    </button>`);
+    return `<div class="choices illustrated${items.length === 3 ? ' illustrated-three' : ''}" style="--count:${items.length}">${options}</div>`;
+  }
+  if (kind === 'layers') {
+    const core = `<span class="assets">${icon('database')} Ativos informacionais</span>`;
+    const layers = items.reduceRight((inner,item,i) => `<div class="layer-shape">${button(item,i)}${inner}</div>`, core);
+    return `<div class="choices layers">${layers}</div>`;
+  }
+  if (kind === 'timeline') {
+    return `<div class="choices timeline">${htmlList(items, (item,i) => `<button type="button" ${attributes(i)}><time datetime="${item.iso}">${escapeHTML(item.data)}</time><span>${escapeHTML(item.titulo)}</span></button>`)}</div>`;
+  }
+  if (['bars','subset','stacked'].includes(kind)) {
+    const values = items.map(item => item.valor);
+    const scale = kind === 'stacked' ? values.reduce((sum,value) => sum + value, 0) : Math.max(...values);
+    const length = item => `--length:${item.valor / scale * 100}%`;
+    if (kind === 'stacked') {
+      const segments = htmlList(items, (item,i) => `<button type="button" ${attributes(i)} style="${length(item)}" aria-label="${escapeHTML(item.titulo)} · ${escapeHTML(chart.format(item))}"></button>`);
+      const legend = htmlList(items, item => `<li><span class="dot" aria-hidden="true"></span><strong>${escapeHTML(chart.format(item))}</strong> · ${escapeHTML(item.titulo)}</li>`);
+      return `<div><div class="stacked">${segments}</div><ul class="legend">${legend}</ul></div>`;
+    }
+    const bars = htmlList(items, (item,i) => `<button class="bar-choice" type="button" ${attributes(i)}>
+      <span class="bar-top"><span>${escapeHTML(item.titulo)}</span><strong>${escapeHTML(chart.format(item))}</strong></span>
+      <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="${length(item)}"></span></span>
+    </button>`);
+    return `<div class="bars ${kind}">${bars}</div>`;
+  }
+  const choices = `<div class="choices ${kind === 'flow' ? 'flow' : kind === 'hub' || kind === 'cols3' ? 'cols3' : 'cols2'}" style="--count:${items.length}">${htmlList(items, button)}</div>`;
+  return kind === 'hub' ? `<div class="hub"><span>PSI</span>${choices}</div>` : choices;
+}
+
+function figure(id) {
+  const chart = diagramData[id];
+  const heading = `chart-${id}`;
+  const split = ['triad','layers'].includes(chart.kind);
+  return `<figure class="figure" data-chart="${id}" aria-labelledby="${heading}">
+    <figcaption${chart.illustration ? ' class="caption-with-art"' : ''}>
+      <div><h3 id="${heading}" tabindex="-1">${escapeHTML(chart.title)}</h3><p class="muted">${escapeHTML(chart.lead)}</p></div>
+      ${chart.illustration ? art(chart.illustration) : ''}
+    </figcaption>
+    <div class="js-only${split ? ' graph-split' : ''}">
+      ${graphControls(id, chart)}
+      <div class="figure-panel" id="panel-${id}" aria-live="polite" aria-atomic="true">${panelContents(chart, chart.items[0])}</div>
+    </div>
+    <ol class="figure-fallback">${htmlList(chart.items, item => `<li>${item.arte ? art(item.arte) : ''}${panelContents(chart,item)}</li>`)}</ol>
+    ${chart.note ? `<p class="source">${escapeHTML(chart.note)}</p>` : ''}
+    ${chart.refs && !chart.items.every(item=>item.ref && item.ref === chart.refs[0]) ? sources(...chart.refs) : ''}
+  </figure>`;
+}
+
+function heroPreview() {
+  return `<a class="hero-preview" href="#chart-transformacao">
+    <span class="preview-caption"><span>Exemplo · Unidade 1</span>${icon('arrow')}</span>
+    <span class="preview-heading"><span class="preview-title">Do dado à decisão</span>${art('records')}</span>
+    <ol class="preview-flow">${htmlList(siteData.fluxoUnidade1, (item,i) => `<li>
+      <span>${escapeHTML(item.titulo)}</span><strong>${escapeHTML(siteData.seminario.exemplosCapa[i])}</strong>
+    </li>`)}</ol>
+  </a>`;
+}
+
+function brand() {
+  return `<a class="brand" href="#inicio"><span class="brand-mark">${icon('shield')}</span><span>Grupo 6</span></a>`;
+}
+
+function navigation(label) {
+  const link = (id,text,symbol) => `<a href="#${id}" data-section="${id}"${id === 'inicio' ? ' aria-current="location"' : ''}>${icon(symbol)}${escapeHTML(text)}</a>`;
+  return `<nav aria-label="${label}">
+    <div class="nav-group">${link('inicio','Início','home')}
+      ${htmlList(siteData.blocos, b => link(b.id,b.curto,b.icon))}
+    </div>
+    <div class="nav-group">${link('glossario','Glossário','search')}${link('revisao','Revisão','cards')}${link('referencias','Referências','link')}</div>
+  </nav>`;
+}
+
+function home() {
+  const s = siteData.seminario;
+  return `<section id="inicio" aria-labelledby="titulo-portal" tabindex="-1">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">${s.tema} · ${s.unidade} · ${s.duracao}</span>
+        <h1 id="titulo-portal"><span class="title-prefix">${escapeHTML(s.nomeGuia)}<span class="sr-only"> - </span></span>${escapeHTML(s.titulo)}</h1>
+        <p>${escapeHTML(s.descricao)}</p>
+        <div class="hero-links">
+          <a class="primary" href="#roteiro-titulo">Ver os blocos ${icon('arrow')}</a>
+          <a href="#glossario">Consultar glossário</a>
+        </div>
+      </div>
+      ${heroPreview()}
+    </div>
+    <section class="route" aria-labelledby="roteiro-titulo">
+      <h2 id="roteiro-titulo" tabindex="-1">Roteiro do seminário</h2>
+      <ol class="route-grid">${htmlList(siteData.blocos, (block,i) => `<li><a class="route-link" href="#${block.id}">
+        <span class="block-index" aria-hidden="true">${i+1}</span><strong>${escapeHTML(block.curto)}</strong>${icon('arrow')}
+      </a></li>`)}</ol>
+    </section>
+    <details class="disclosure about"><summary>Sobre o seminário · IFS Itabaiana</summary>
+      <dl class="academic">
+        <div><dt>${escapeHTML(s.instituicao)}</dt><dd>${escapeHTML(s.campus)} · ${escapeHTML(s.curso)}</dd></div>
+        <div><dt>${escapeHTML(s.disciplina)}</dt><dd>Professor ${escapeHTML(s.professor)}</dd></div>
+        <div><dt>Integrantes</dt><dd>${escapeHTML(s.integrantes.join(' · '))}</dd></div>
+      </dl>
+    </details>
+  </section>`;
+}
+
+const paragraphs = items => htmlList(items, text => `<p>${escapeHTML(text)}</p>`);
+const cardGrid = (items, render, columns = 2) => `<div class="cards cols${columns}">${htmlList(items,render)}</div>`;
+const disclosure = (label, content, id) => `<details class="disclosure"${id ? ` id="${id}"` : ''}>
+  <summary>${escapeHTML(label)}</summary><div class="disclosure-body">${content}</div></details>`;
+const rows = (items, title, text) => `<dl class="study-rows">${htmlList(items, item=>`<div>
+  <dt>${escapeHTML(title(item))}</dt><dd>${escapeHTML(text(item))}</dd></div>`)}</dl>`;
+const reflection = text => `<blockquote class="reflection">${escapeHTML(text)}</blockquote>`;
+
+function foundations() {
+  const d = siteData.introducao;
+  return figure('transformacao') +
+    disclosure('O sistema de informação e a Unidade 1', paragraphs([d.si,d.ligacao]) + reflection(d.pergunta)) +
+    disclosure('Ameaça, vulnerabilidade, risco e incidente',
+      rows(siteData.conceitos, item=>item.titulo, item=>item.resumo) + figure('risco')) +
+    disclosure('Explorar malware, phishing e outras ameaças',figure('ameacas'));
+}
+
+function defense() {
+  return figure('cid') + disclosure('Política de Segurança da Informação',figure('psi')) +
+    disclosure('Defesa em camadas e normas ISO',figure('camadas') +
+      rows(siteData.normas, item=>item.nome, item=>item.papel) + sources('iso27001','iso27002'));
+}
+
+function privacy() {
+  const d = siteData.lgpd;
+  return `<p class="section-note">${escapeHTML(d.notaLegal)}</p>` + figure('principios') +
+    disclosure('Dados pessoais e tratamento', paragraphs([d.intro]) +
+      rows(d.exemplos, item=>item.titulo, item=>item.texto) + sources('lei')) +
+    disclosure('O que a empresa precisa fazer', figure('obrigacoes') +
+      paragraphs([d.incidencia]) + sources('lei','anpd','regol')) +
+    disclosure('Ciclo dos dados em um banco',figure('ciclo'));
+}
+
+function bankCase() {
+  const d = siteData.caso;
+  return figure('registros') + disclosure('Outros dados expostos e limites do caso',
+    `<ul class="case-facts">${htmlList(d.confirmados, text=>`<li>${escapeHTML(text)}</li>`)}</ul>
+    <p>${escapeHTML(d.limite)}</p>` + sources('mp_julho')) +
+    disclosure('Linha do tempo de 2018',figure('timeline')) +
+    disclosure('Valores do pedido e do acordo', figure('valores') + figure('reparticao') +
+      paragraphs([d.cuidado]) + sources('mp_dezembro'));
+}
+
+function practices() {
+  const d = siteData.conclusao;
+  const checks = cardGrid(siteData.boasPraticas, group => `<fieldset class="check-group">
+    <legend>${escapeHTML(group.grupo)}</legend>
+    ${htmlList(group.itens,text=>`<label class="check-row"><input type="checkbox" autocomplete="off"><span>${escapeHTML(text)}</span></label>`)}
+  </fieldset>`, 3);
+  return figure('acoes') + disclosure('Abrir checklist de boas práticas',
+    `<div class="checklist" id="checklist"><p class="check-status js-only" id="check-status" role="status"></p>${checks}</div>`, 'checklist-browser') +
+    disclosure('Impactos para clientes, empresa e governança',figure('impactos')) +
+    disclosure('Três ideias para levar do seminário',
+      rows(d.mensagens, item=>item.titulo, item=>item.texto) + reflection(d.pergunta));
+}
+
+function blockSection(block, i) {
+  const content = [foundations,defense,privacy,bankCase,practices][i]();
+  return `<section class="block" id="${block.id}" aria-labelledby="heading-${block.id}" tabindex="-1">
+    <header class="block-head"><span class="block-index" aria-hidden="true">${i+1}</span><div>
+      <span class="eyebrow">${escapeHTML(block.pessoa)}</span>
+      <h2 id="heading-${block.id}">${escapeHTML(block.curto)}</h2>
+      <p>${escapeHTML(block.resumo)}</p>
+    </div></header>
+    ${content}
+  </section>`;
+}
+
+function glossary() {
+  const categories = [...new Set(siteData.glossario.map(item => item.categoria))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  const terms = `<div class="term-list">${htmlList(siteData.glossario, (item,i) => `<details class="term" data-term="${i}">
+    <summary>${escapeHTML(item.termo)}${item.sigla ? ` <small>${escapeHTML(item.sigla)}</small>` : ''}</summary>
+    <p>${escapeHTML(item.definicao)}</p>
+    <p><strong>Exemplo</strong> · ${escapeHTML(item.exemplo)}</p>
+  </details>`)}</div>`;
+  return `<section class="reference-section" id="glossario" aria-labelledby="glossario-titulo" tabindex="-1">
+    <h2 id="glossario-titulo">Glossário</h2>
+    ${disclosure('Pesquisar termos', `<div class="tools js-only">
+      <label>Termo ou sigla <input id="glossary-query" type="search" placeholder="Ex. PSI ou backup"></label>
+      <label>Categoria <select id="glossary-category">
+        <option value="">Todas as categorias</option>
+        ${htmlList(categories, cat => `<option>${escapeHTML(cat)}</option>`)}
+      </select></label>
+    </div><p class="source js-only" id="glossary-status" role="status"></p>
+    <div id="glossary-results">${terms}</div>`, 'glossary-browser')}
+  </section>`;
+}
+
+function review() {
+  return `<section class="reference-section" id="revisao" aria-labelledby="revisao-titulo" tabindex="-1">
+    <h2 id="revisao-titulo">Revisão rápida</h2>
+    ${disclosure('Abrir os cartões de revisão', `<div class="term-list">
+      ${htmlList(siteData.flashcards, item => `<details class="flash"><summary>${escapeHTML(item.frente)}</summary><p>${escapeHTML(item.verso)}</p></details>`)}
+    </div>`, 'review-browser')}
+  </section>`;
+}
+
+function bibliography() {
+  const references = `<ul class="reference-list">${htmlList(siteData.referencias, ref => `<li id="ref-${ref.id}" tabindex="-1">
+    <strong>${escapeHTML(ref.autor)} <cite>${escapeHTML(ref.titulo)}</cite> ${escapeHTML(ref.ano)}.</strong>
+    <p class="muted">${escapeHTML(ref.detalhe)}</p>
+    ${ref.url ? `<p class="source">${externalLink(ref.url, `Consultar ${sourceNames[ref.id]}`)}</p>` : ''}
+  </li>`)}</ul>`;
+  return `<section class="reference-section" id="referencias" aria-labelledby="referencias-titulo" tabindex="-1">
+    <h2 id="referencias-titulo">Referências</h2>
+    ${disclosure('Ver bibliografia e fontes oficiais',references,'references-browser')}
+  </section>`;
+}
+
+function renderPortal() {
+  return `<aside class="sidebar" aria-label="Navegação lateral">
+    ${brand()}${navigation('Seções do portal')}
+    <p class="side-note"><strong>IFS · Campus Itabaiana</strong>Fundamentos de Sistemas de Informação</p>
+  </aside>
+  <main id="conteudo" tabindex="-1">
+    <header class="topbar">
+      ${brand()}
+      <span class="topbar-title">Guia do seminário · Fundamentos de Sistemas de Informação</span>
+      <details class="mobile-nav" id="mobile-nav"><summary class="utility">${icon('menu')} Seções</summary>${navigation('Seções do portal no celular')}</details>
+      <button class="utility js-only" id="theme" type="button" aria-label="Modo escuro" aria-pressed="false">${icon('moon')}</button>
+    </header>
+    <div class="main-inner">
+      ${home()}
+      ${htmlList(siteData.blocos,blockSection)}
+      ${glossary()}
+      ${review()}
+      ${bibliography()}
+      <footer class="footer"><span>Material de apoio · IFS Itabaiana</span><a href="#inicio">Voltar ao início ${icon('top')}</a></footer>
+    </div>
+  </main>`;
+}
+
+function initCharts(portal) {
+  for (const figure of portal.querySelectorAll('[data-chart]')) {
+    const chart = diagramData[figure.dataset.chart];
+    const panel = figure.querySelector('.figure-panel');
+    const controls = [...figure.querySelectorAll('[data-item]')];
+    function select(control) {
+      if (control.getAttribute('aria-pressed') === 'true') return;
+      for (const item of controls) item.setAttribute('aria-pressed', String(item === control));
+      panel.innerHTML = panelContents(chart, chart.items[Number(control.dataset.item)]);
+    }
+    for (const control of controls) {
+      control.addEventListener('click', () => select(control));
+      if (control.getAttribute('role') === 'button') {
+        control.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            select(control);
+          }
+        });
+      }
+    }
+  }
+}
+
+function initGlossary() {
+  const query = document.querySelector('#glossary-query');
+  const category = document.querySelector('#glossary-category');
+  const status = document.querySelector('#glossary-status');
+  const cards = [...document.querySelectorAll('[data-term]')];
+  const clean = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const entries = siteData.glossario.map(({termo,sigla,definicao,exemplo}) =>
+    clean([termo,sigla,definicao,exemplo].join(' ')));
+  function filter() {
+    const words = clean(query.value).split(/\s+/);
+    let count = 0;
+    cards.forEach((card,i) => {
+      const correctCategory = !category.value || siteData.glossario[i].categoria === category.value;
+      const found = correctCategory && words.every(word => entries[i].includes(word));
+      card.hidden = !found;
+      count += Number(found);
+    });
+    status.textContent = count === 0 ? 'Nenhum termo encontrado. Tente outra palavra ou categoria.'
+      : count === 1 ? '1 termo encontrado' : `${count} termos encontrados`;
+  }
+  query.addEventListener('input', filter);
+  category.addEventListener('change', filter);
+  filter();
+}
+
+function initChecklist() {
+  const checklist = document.querySelector('#checklist');
+  const fields = [...checklist.querySelectorAll('input')];
+  const status = document.querySelector('#check-status');
+  function update() {
+    status.textContent = `${fields.filter(field => field.checked).length} de ${fields.length} itens marcados`;
+  }
+  checklist.addEventListener('change', update);
+  update();
+}
+
+function initNavigation(portal) {
+  const menu = document.querySelector('#mobile-nav');
+  const summary = menu.querySelector('summary');
+  const links = [...portal.querySelectorAll('[data-section]')];
+
+  const expandableSections = {
+    glossario:'glossary-browser', revisao:'review-browser', referencias:'references-browser'
+  };
+  function reveal(fragment) {
+    const target = document.getElementById(fragment);
+    if (!target) return;
+    const expandable = document.getElementById(expandableSections[fragment]);
+    if (expandable) expandable.open = true;
+    for (let parent = target.parentElement; parent && parent !== portal; parent = parent.parentElement) {
+      if (parent instanceof HTMLDetailsElement) parent.open = true;
+    }
+  }
+  function markCurrent() {
+    const fragment = location.hash.slice(1) || 'inicio';
+    reveal(fragment);
+    const target = document.getElementById(fragment);
+    const current = target?.closest('section.block, section.reference-section, #inicio')?.id;
+    for (const link of links) {
+      if (link.dataset.section === current) link.setAttribute('aria-current','location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+  portal.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    const id = link.hash.slice(1);
+    reveal(id);
+    if (menu.contains(link)) {
+      menu.open = false;
+      document.getElementById(id)?.focus({preventScroll:true});
+    }
+  });
+  menu.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.open) {
+      menu.open = false;
+      summary.focus();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (menu.open && !menu.contains(event.target)) menu.open = false;
+  });
+  window.addEventListener('hashchange', markCurrent);
+  markCurrent();
+}
+
+function initTheme() {
+  const button = document.querySelector('#theme');
+  button.addEventListener('click', () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+    button.setAttribute('aria-pressed',String(!isDark));
+    button.innerHTML = icon(isDark ? 'moon' : 'sun');
+  });
+}
+
+function enhance() {
+  const portal = document.querySelector('#portal');
+  portal.innerHTML = renderPortal();
+  initCharts(portal);
+  initGlossary();
+  initChecklist();
+  initNavigation(portal);
+  initTheme();
+  portal.classList.add('enhanced');
+}
+
+if (typeof document !== 'undefined') enhance();
+  </script>
+</body>
+</html>
